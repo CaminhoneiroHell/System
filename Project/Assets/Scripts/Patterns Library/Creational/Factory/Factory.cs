@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 namespace Patterns.Creational.Factory
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
     public class Factory : MonoBehaviour {
 	    void Start () {
             print("Create Factory!");
