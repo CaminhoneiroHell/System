@@ -19,7 +19,6 @@ namespace Patterns.Behavioral.Strategy
     using System.Collections.Generic;
     using UnityEngine;
 
-
     class Context
     {
         private IStrategy _strategy;

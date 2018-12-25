@@ -1,0 +1,8 @@
+Create a new scene put Inputhandler over an object and test it
+A,W,S,D to move, B Do nothing and Z undo the changes.
+
+More info:
+https://www.habrador.com/tutorials/programming-patterns/1-command-pattern/
+
+About:
+https://refactoring.guru/design-patterns/command
