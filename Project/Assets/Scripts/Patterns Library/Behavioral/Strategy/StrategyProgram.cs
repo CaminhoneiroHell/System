@@ -19,6 +19,7 @@ namespace Patterns.Behavioral.Strategy
     using System.Collections.Generic;
     using UnityEngine;
 
+    //The Context maintains a reference to one of the concrete strategies and communicates with this object only via the strategy interface.
     class Context
     {
         private IStrategy _strategy;
@@ -54,11 +55,13 @@ namespace Patterns.Behavioral.Strategy
 
     }
 
+    //The Strategy interface is common to all concrete strategies. It declares a method the context uses to execute a strategy.
     interface IStrategy
     {
         object DoAlgorithm(object data);
     }
 
+    //Concrete Strategies implement different variations of an algorithm the context uses.
     class ConcreteStrategyA : IStrategy
     {
         public object DoAlgorithm(object data)
@@ -81,9 +84,14 @@ namespace Patterns.Behavioral.Strategy
             return list;
         }
     }
+    //The context calls the execution method on the linked strategy object each time it needs to run the algorithm. 
+    //The context doesn’t know what type of strategy it works with or how the algorithm is executed.
 
 
 
+    /*****************************************************************************************************************************************/
+    //The Client creates a specific strategy object and passes it to the context. 
+    //The context exposes a setter which lets clients replace the strategy associated with the context at runtime.
     class Client
     {
         public static void ClientCode()
@@ -103,7 +111,7 @@ namespace Patterns.Behavioral.Strategy
     }
 
 
-    class Program : MonoBehaviour
+    class StrategyProgram : MonoBehaviour
     {
         void Start()
         {

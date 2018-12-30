@@ -1,4 +1,5 @@
 ﻿
+//Observer is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they’re observing.
 
 //1 Differentiate between the core(or independent) functionality and the optional(or dependent) functionality.The former will act as a publisher, and the later will serve as subscribers.
 
@@ -24,133 +25,123 @@ namespace Patterns.Behavioral.Observer
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    
+    //2 Create the Subscriber interface. In most cases, a single update method is enough.
+    public interface ISplObserver{
+        void update(ISplSubject subject);
+    }
 
-    class Program
+    //3 Create the Publisher interface and describe the operations for starting and terminating subscription in it.Remember that publisher should work with subscribers via their common interface.
+    public interface ISplSubject{
+        void attach(ISplObserver observer);
+
+        void detach(ISplObserver observer);
+
+        void notify();
+    }
+
+    //4 Create Concrete Publisher classes.They should send notifications to the whole list of subscribers each time when something important happens inside the object.
+    public class Subject : ISplSubject  //******PUBLISHER*******
     {
-        //2 Create the Subscriber interface. In most cases, a single update method is enough.
-        public interface ISplObserver
+        public int State { get; set; } = -0;
+
+        private List<ISplObserver> _observers = new List<ISplObserver>();
+
+        public void attach(ISplObserver observer)
         {
-            void update(ISplSubject subject);
+            Debug.Log("Subject: Attached an observer.\n");
+            this._observers.Add(observer);
         }
 
-        //3 Create the Publisher interface and describe the operations for starting and terminating subscription in it.Remember that publisher should work with subscribers via their common interface.
-        public interface ISplSubject
+        public void detach(ISplObserver observer)
         {
-            void attach(ISplObserver observer);
-
-            void detach(ISplObserver observer);
-
-            void notify();
-        }
-
-        //4 Create Concrete Publisher classes.They should send notifications to the whole list of subscribers each time when something important happens inside the object.
-        public class Subject : ISplSubject  //******PUBLISHER*******
-        {
-            public int State { get; set; } = -0;
-
-            private List<ISplObserver> _observers = new List<ISplObserver>();
-
-            public void attach(ISplObserver observer)
+            foreach (var elem in _observers)
             {
-                Debug.Log("Subject: Attached an observer.\n");
-                this._observers.Add(observer);
-            }
-
-            public void detach(ISplObserver observer)
-            {
-                foreach (var elem in _observers)
+                if (elem == observer)
                 {
-                    if (elem == observer)
-                    {
-                        _observers.Remove(observer);
-                        Debug.Log("Subject: Detached an observer.\n");
-                        break;
-                    }
-                }
-            }
-
-            public void notify()
-            {
-                Debug.Log("Subject: Notifying observers...\n");
-
-                foreach (var observer in _observers)
-                {
-                    observer.update(this);
-                }
-            }
-
-            public IEnumerator someBusinessLogic()
-            {
-                Debug.Log("\nSubject: I'm doing something important.\n");
-                this.State = Random.Range(0,10);
-
-                yield return new WaitForSeconds(15);
-                //Thread.Sleep(15);
-
-                Debug.Log("Subject: My state has just changed to: " + this.State + "\n");
-                this.notify();
-            }
-        }
-
-
-        class ConcreteObserverA : ISplObserver
-        {
-            public void update(ISplSubject subject)
-            {
-                if (!(subject is Subject))
-                {
-                    return;
-                }
-
-                if ((subject as Subject).State < 3)
-                {
-                    Debug.Log("ConcreteObserverA: Reacted to the event.\n");
+                    _observers.Remove(observer);
+                    Debug.Log("Subject: Detached an observer.\n");
+                    break;
                 }
             }
         }
 
-        class ConcreteObserverB : ISplObserver
+        public void notify()
         {
-            public void update(ISplSubject subject)
-            {
-                if (!(subject is Subject))
-                {
-                    return;
-                }
+            Debug.Log("Subject: Notifying observers...\n");
 
-                if ((subject as Subject).State == 0 || (subject as Subject).State >= 2)
-                {
-                    Debug.Log("ConcreteObserverB: Reacted to the event.\n");
-                }
+            foreach (var observer in _observers)
+            {
+                observer.update(this);
             }
         }
 
-        class Client
+
+        public IEnumerator someBusinessLogic()
         {
-            public static void ClientCode()
+            Debug.Log("\nSubject: I'm doing something important.\n");
+            this.State = Random.Range(0,10);
+
+            yield return new WaitForSeconds(2);
+            //Thread.Sleep(15);
+
+            Debug.Log("Subject: My state has just changed to: " + this.State + "\n");
+            this.notify();
+            
+        }
+
+    }
+
+
+    class ConcreteObserverA : ISplObserver
+    {
+        public void update(ISplSubject subject)
+        {
+            if (!(subject is Subject))
             {
-                var subj = new Subject();
-                var o1 = new ConcreteObserverA();
-                subj.attach(o1);
+                return;
+            }
 
-                var o2 = new ConcreteObserverB();
-                subj.attach(o2);
-
-                subj.someBusinessLogic();
-                subj.someBusinessLogic();
-
-                subj.detach(o2);
-
-                subj.someBusinessLogic();
+            if ((subject as Subject).State < 3)
+            {
+                Debug.Log("ConcreteObserverA: Reacted to the event.\n");
             }
         }
-        class Programa: MonoBehaviour
+    }
+
+    class ConcreteObserverB : ISplObserver
+    {
+        public void update(ISplSubject subject)
         {
-            void Start()
+            if (!(subject is Subject))
             {
-                Debug.Log("Start Observer!");
-                Client.ClientCode();
+                return;
             }
+
+            if ((subject as Subject).State == 0 || (subject as Subject).State >= 2)
+            {
+                Debug.Log("ConcreteObserverB: Reacted to the event.\n");
+            }
+        }
+    }
+
+    class Observer: MonoBehaviour
+    {
+        void Start()
+        {
+            Debug.Log("Start Observer!");
+            var subj = new Subject();
+            var o1 = new ConcreteObserverA();
+            subj.attach(o1);
+
+            var o2 = new ConcreteObserverB();
+            subj.attach(o2);
+
+            StartCoroutine(subj.someBusinessLogic());
+
+            //subj.detach(o2);
+
+            //StartCoroutine(subj.someBusinessLogic());
 
         }
     }
