@@ -1,84 +1,45 @@
-﻿
-
-//1 Add to the class a private static field that will hold the singleton instance.
-
-//2 Declare public static creation method that will be used for retrieving singleton instance.
-
-//3 Implement "lazy initialization" inside the creation method.It should create a new instance on the first call and put it into the static field.
-//The method should return that instance in all subsequent calls.
-
-//4 Make class constructor private.
-
-//5 In client code replace all direct constructor calls with calls to the static creation method.
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace Patterns.Creational.Singleton
 {
-
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-
-    //1 Add to the class a private static field that will hold the singleton instance.
-    class Singleton
+    public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        //2 Declare public static creation method that will be used for retrieving singleton instance.
-        private static Singleton instance;
-
-
-        //3 Implement "lazy initialization" inside the creation method.It should create a new instance on the first call and put it into the static field.
-        //The method should return that instance in all subsequent calls.
-        private static object obj = new object();
-
-        //4 Make class constructor private.
-        private Singleton() { }
-
-        public static Singleton GetInstace()
+        private static T instance;
+        public static T Instance
         {
-            lock (obj)
-            {
-                if (instance == null)
-                    instance = new Singleton();
-            }
-
-            return instance;
+            get { return instance; }
         }
 
-    }
-
-    class Client
-    {
-        //5 In client code replace all direct constructor calls with calls to the static creation method.
-        public void ClientCode()
+        public static bool IsInitialized
         {
-            Singleton s1 = Singleton.GetInstace();
-            Singleton s2 = Singleton.GetInstace();
-            Singleton s3 = Singleton.GetInstace();
-            Singleton s4 = Singleton.GetInstace();
-
-
-            if (s1 == s2 && s3 == s4)
+            get
             {
-                Debug.Log("Singleton works, both variables contain the same instance.");
+                return instance != null;
+            }
+        }
+
+        protected virtual void Awake()
+        {
+            if (instance != null)
+            {
+                Debug.LogError("[Singleton] Trying to instantitate a second instance of a singleton class.");
             }
             else
             {
-                Debug.Log("Singleton failed, variables contain different instances.");
+                instance = (T)this;
             }
-
         }
-    }
 
-    class Program: MonoBehaviour
-    {
-        void Start()
+        protected virtual void OnDestroy()
         {
-
-            Debug.Log("Singleton start");
-
-            Client client = new Client();
-            client.ClientCode();
+            if (instance == this)
+            {
+                instance = null;
+            }
         }
-    }
 
+    }
 }
