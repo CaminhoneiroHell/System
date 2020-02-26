@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,16 +10,37 @@ public class Mathmatics : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(a + " + " + b + " = " + Add(a, b));
-        Debug.Log(a + " - " + b + " = " + Subtract(a, b));
-        Debug.Log(a + " * " + b + " = " + Multiply(a, b));
-        Debug.Log(a + " / " + b + " = " + Divide(a, b));
+        //Integers
+        // Debug.Log(a + " + " + b + " = " + Add(a, b));
+        // Debug.Log(a + " - " + b + " = " + Subtract(a, b));
+        // Debug.Log(a + " * " + b + " = " + Multiply(a, b));
+        // Debug.Log(a + " / " + b + " = " + Divide(a, b));
+
+        //Binary
+        Debug.Log(Convert.ToString(a, 2).PadLeft(10, '0') + " + "
+        + Convert.ToString(b, 2).PadLeft(10, '0') +
+        " = " + Convert.ToString(Add(a, b), 2).PadLeft(10, '0'));
+
+        Debug.Log(Convert.ToString(a, 2).PadLeft(10, '0') + " - "
+        + Convert.ToString(b, 2).PadLeft(10, '0') +
+        " = " + Convert.ToString(Subtract(a, b), 2).PadLeft(10, '0'));
+
+        Debug.Log(Convert.ToString(a, 2).PadLeft(10, '0') + " * "
+        + Convert.ToString(b, 2).PadLeft(10, '0') +
+        " = " + Convert.ToString(Multiply(a, b), 2).PadLeft(10, '0'));
+
+        Debug.Log(Convert.ToString(a, 2).PadLeft(10, '0') + " / "
+        + Convert.ToString(b, 2).PadLeft(10, '0') +
+        " = " + Convert.ToString(Divide(a, b), 2).PadLeft(10, '0'));
+
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     int Add(int a, int b)
@@ -32,7 +54,7 @@ public class Mathmatics : MonoBehaviour
         return a;
     }
 
-    
+
     int Subtract(int a, int b)
     {
         while (b != 0)
@@ -44,7 +66,7 @@ public class Mathmatics : MonoBehaviour
         return a;
     }
 
-    
+
     int Multiply(int n, int m)
     {
         int answer = 0;
@@ -58,7 +80,7 @@ public class Mathmatics : MonoBehaviour
         }
         return answer;
     }
-    
+
     int remainder, divisor;
 
     int Divide(int tempdividend, int tempdivisor)
