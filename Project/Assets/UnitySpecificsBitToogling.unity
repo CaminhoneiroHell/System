@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 858849052}
   - component: {fileID: 858849051}
   - component: {fileID: 858849050}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 1303523049}
   - component: {fileID: 1303523048}
   - component: {fileID: 1303523047}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 1901384417}
   - component: {fileID: 1901384416}
   - component: {fileID: 1901384415}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 1926673040}
   - component: {fileID: 1926673039}
   - component: {fileID: 1926673038}
+  - component: {fileID: 1926673042}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -664,3 +665,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1926673042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926673037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1883f27f043788542b5ec1262d154da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
