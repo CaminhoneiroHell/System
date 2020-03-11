@@ -11,10 +11,10 @@ public class Mathmatics : MonoBehaviour
     void Start()
     {
         //Integers
-        // Debug.Log(a + " + " + b + " = " + Add(a, b));
-        // Debug.Log(a + " - " + b + " = " + Subtract(a, b));
-        // Debug.Log(a + " * " + b + " = " + Multiply(a, b));
-        // Debug.Log(a + " / " + b + " = " + Divide(a, b));
+        Debug.Log(a + " + " + b + " = " + Add(a, b));
+        Debug.Log(a + " - " + b + " = " + Subtract(a, b));
+        Debug.Log(a + " * " + b + " = " + Multiply(a, b));
+        Debug.Log(a + " / " + b + " = " + Divide(a, b));
 
         //Binary
         Debug.Log(Convert.ToString(a, 2).PadLeft(10, '0') + " + "
