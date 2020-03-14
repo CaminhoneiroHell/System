@@ -2,10 +2,23 @@
 using UnityEngine;
 using System.Collections;
 
+public enum RayCastDirection
+{
+    FOWARD,
+    BEHIND,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+}
+
+
 public class RayCaster : MonoBehaviour
 {
     //const int badGround = 9;
     //const int road = 8;
+
+    public RayCastDirection rcstDir;
 
     #region Coordination_Variables
     float maxDistance = 100;
@@ -23,12 +36,13 @@ public class RayCaster : MonoBehaviour
 
     private void Start() {
         packed = (1 << 8 | 1 << 9 );
-        UnityEngine.Debug.Log("Pack result" + Convert.ToString(packed, 2 ).PadLeft(32, '0'));
+        //UnityEngine.Debug.Log("Pack result" + Convert.ToString(packed, 2 ).PadLeft(32, '0'));
     }
 
     #region raycasters
 
-
+    public int groundType;
+    public float distanceFromGround; 
     public Vector3 CastRayDown(int layerMask)
     {
         RaycastHit hitDown;
@@ -36,19 +50,24 @@ public class RayCaster : MonoBehaviour
         if (Physics.Raycast(transform.position, fwd, out hitDown, maxDistance, layerMask))
         {
             //Debug.Log("We hit: " + hit.transform.name);
-            // distanceTofloorFwd = hitFoward.collider.gameObject.layer = layerMask;
+            //distanceTofloorFwd = hitFoward.collider.gameObject.layer = layerMask;
             // maxDistance = distanceTofloorFwd;
-            print(Convert.ToString(layerMask, 2).PadLeft(32, '0'));
 
-            Debug.Log("Distance from the collider to object who shooted raycast is: " + hitDown.distance);
+            //print(Convert.ToString(layerMask, 2).PadLeft(32, '0'));
+            //print("Distance from the collider to object who shooted raycast is: " + hitDown.distance);
             // print("The collided tag is: " + hitFoward.collider.tag);
-            print("The collided layer is: " + hitDown.collider.gameObject.layer);
-            print("Hitting: " + hitDown.collider.gameObject.name);
+            //print("The collided layer is: " + hitDown.collider.gameObject.layer);
+            //print("Hitting: " + hitDown.collider.gameObject.name);
 
-            if (hitDown.collider.gameObject.layer == GameData.road)
+            distanceFromGround = hitDown.distance;
+            groundType = hitDown.collider.gameObject.layer;
+
+            if (hitDown.collider.gameObject.layer == GameData.road){
                 Debug.DrawRay(transform.position, fwd * hitDown.distance, Color.green);
-            else if (hitDown.collider.gameObject.layer == GameData.badGround)
+            }else if (hitDown.collider.gameObject.layer == GameData.badGround)
+            {
                 Debug.DrawRay(transform.position, fwd * hitDown.distance, Color.yellow);
+            }
 
             return hitDown.point;
         }
@@ -59,6 +78,32 @@ public class RayCaster : MonoBehaviour
             return transform.position + (transform.forward * maxDistance);
         }
     }
+
+        
+    public Vector3 CastRayFoward()
+    {
+        RaycastHit hitFoward;
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(transform.position, fwd, out hitFoward, maxDistance))
+        {
+            Debug.DrawRay(transform.position, fwd * hitFoward.distance, Color.blue);
+
+            //ReturnAngle();
+
+            return hitFoward.point;
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, fwd * maxDistance, Color.blue);
+
+            //ReturnAngle();
+
+            return transform.position + (transform.forward * maxDistance);
+
+        }
+    }
+
+
 
 
     public Vector3 CastRayFoward(Color color, int layerMask)
@@ -117,7 +162,6 @@ public class RayCaster : MonoBehaviour
         return transform.position + (transform.up * maxDistance);
     }
 
-
     public Vector3 CastRayRight()
     {
         RaycastHit hitRight;
@@ -132,6 +176,7 @@ public class RayCaster : MonoBehaviour
         }
         return transform.position + (transform.right * maxDistance);
     }
+
     public Vector3 CastRayLeft()
     {
         RaycastHit hitLeft;
@@ -155,12 +200,25 @@ public class RayCaster : MonoBehaviour
     }
     private void Execute_RayCasterShooter()
     {
-        CastRayDown(packed);
+        switch(rcstDir)
+        {
+            case RayCastDirection.DOWN:
+               CastRayDown(packed);
+                break;
+            case RayCastDirection.FOWARD:
+                CastRayFoward();
+                break;
+            default:
+                break;
+        }
     }
 
+
+    float frontAngle;
     void Update()
     {
         Execute_RayCasterShooter();
+
     }
     
 }
