@@ -6,6 +6,7 @@ public class VRMenuState : MonoBehaviour, IFSMState
 {
     public IEnumerator Enter()
     {
+        GameManager.Instance.isUsingVR = true;
         yield return new WaitForEndOfFrame();
     }
 

@@ -748,7 +748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4308902567438893495
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1748,12 +1748,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4308902568561755658}
-        m_MethodName: 
+      - m_Target: {fileID: 4308902568561755659}
+        m_MethodName: EnterNormalGameplayMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2311,7 +2311,8 @@ MonoBehaviour:
   splashScreen: {fileID: 4308902567916745331}
   pauseMenu: {fileID: 4308902568532751839}
   gameModeSelect: {fileID: 4308902567438893494}
-  trackSelect: {fileID: 3323064975463467625}
+  trackSelectNonVR: {fileID: 3323064975463467625}
+  dummyCamera: {fileID: 4308902567879486344}
 --- !u!95 &3994765783140357460
 Animator:
   serializedVersion: 3
@@ -2449,12 +2450,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4308902568561755658}
-        m_MethodName: 
+      - m_Target: {fileID: 4308902568561755659}
+        m_MethodName: RainbowRoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2578,12 +2579,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4308902568561755658}
-        m_MethodName: 
+      - m_Target: {fileID: 4308902568561755659}
+        m_MethodName: UnderwaterRoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2665,7 +2666,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RainbowRoad
+  m_Text: Locked
 --- !u!1 &8409193554065706243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2938,12 +2939,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4308902568561755658}
-        m_MethodName: 
+      - m_Target: {fileID: 4308902568561755659}
+        m_MethodName: FarmRoad
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    AnglePlayerController anglePlayerController;
+    
     Rigidbody rb;
+    CartAnimationController cartAnimation;
+    AnglePlayerController anglePlayerController;
+    
     [SerializeField] RayCaster[] gravityPoints;
+    
     public float gravityForce = 10000f;
     float boost = 0.1f;
     // Start is called before the first frame update
@@ -16,20 +20,20 @@ public class PlayerController : MonoBehaviour
         rb.centerOfMass = Vector3.down;
 
         anglePlayerController = GetComponent<AnglePlayerController>();
+        cartAnimation = GetComponent<CartAnimationController>();
     }
 
     [SerializeField] float throotle = 0.0f;
     [SerializeField] float maxAccelerationSpeed = 6.0f;
     [SerializeField] float minAccelerationSpeed = 0.0f;
+    [SerializeField] float maxAccelerationSpeedBackwards = 1.5f;
     [SerializeField] float rotationSpeed = 50.0F;
+
+    //float wheelrotationSpeed = 80.0f;
 
     void Acceleration()
     {
-        //transform.Translate(Vector3.forward * 100f / 3.6f * Time.deltaTime * extraSpeed);
-        //if(boost < 0.1f)
-            transform.Translate(Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle);
-        //else
-        //    transform.Translate(Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle * boost);
+        transform.Translate(Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle);
     }
 
     [SerializeField] bool isGrounded;
@@ -73,25 +77,41 @@ public class PlayerController : MonoBehaviour
 
         //Rotation
 
-        float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
+        var rotation = Input.GetAxis("Horizontal") * rotationSpeed;
+        //var wheelRotation = Input.GetAxis("Horizontal") * wheelrotationSpeed;
         rotation *= Time.deltaTime;
         Quaternion turn = Quaternion.Euler(anglePlayerController.pitchFoward, rotation, 0f);
+        Quaternion turnWheel = Quaternion.Euler(0f, 0f, rotation);
         transform.Rotate(turn.eulerAngles, Space.Self);
         
         if(Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal") == -1)
         {
             throotle -= 0.01f * Time.deltaTime;
+            cartAnimation.steeringWheel.transform.Rotate(turnWheel.eulerAngles, Space.Self); //Anim steering wheel
+            //cartAnimation.wheelBack.transform.Rotate(turn.eulerAngles, Space.Self); //Anim steering wheel
+            //cartAnimation.wheelFront.transform.Rotate(turn.eulerAngles, Space.Self); //Anim steering wheel
             print("Loosing speed during curve");
         }
 
 
         Acceleration();
-        
+
+        //Front
         if (Input.GetAxis("Vertical") > 0)
         {
             //print(Input.GetAxis("Vertical"));
             if(throotle < maxAccelerationSpeed){
                 throotle += 0.4f * Time.deltaTime;
+            }
+        }
+
+        //Back
+        if (Input.GetAxis("Vertical") == -1)
+        {
+            if (throotle < maxAccelerationSpeedBackwards)
+            {
+                throotle += 0.4f * Time.deltaTime;
+                transform.Translate(- Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle);
             }
         }
 
@@ -106,22 +126,6 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        //rb.AddRelativeForce(Vector3.down * 100);
-        //if (transform.position.y > transform.position.y)
-        //{
-        //body.AddForceAtPosition(hoverPoint.transform.up * gravityForce, hoverPoint.transform.position);
-        //}
-        //else
-        //{
-        //    body.AddForceAtPosition(hoverPoint.transform.up * -gravityForce, hoverPoint.transform.position);
-        //}
-
-        //rb.MoveRotation(rb.rotation * turn);
-
-        //transform.Rotate(Quaternion.Euler(rotation, 0, 0));
-        //transform.Translate(Vector3.right * 100f / 3.6f * Time.deltaTime);
-        //}
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             boost = 5f;

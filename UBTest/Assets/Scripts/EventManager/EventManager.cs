@@ -12,11 +12,24 @@ public class EventManager : MonoBehaviour
     public delegate void StartNormalCamDelegate();
     public static StartNormalCamDelegate onStartNormalCam;
 
+    public delegate void StartRaceDelegate();
+    public static StartRaceDelegate onStartRace;
+
     public delegate void TakeDamageDelegate(float amt);
     public static TakeDamageDelegate onTakeDamage;
 
     public delegate void UnlockStageDelegate(bool locked, int stage);
     public static UnlockStageDelegate unlockStage;
+
+    public delegate void RaceFinisherDelegate();
+    public static RaceFinisherDelegate onRaceFinished;
+
+    public static void RaceFinished()
+    {
+        Debug.Log("Race finished");
+        if (onRaceFinished != null)
+            onRaceFinished();
+    }
 
     public static void StartWithNormalCam()
     {
@@ -37,6 +50,13 @@ public class EventManager : MonoBehaviour
         Debug.Log("StartGame");
         if (onStartGame != null)
             onStartGame();
+    }
+
+    public static void StartRace()
+    {
+        Debug.Log("Start Race!");
+        if (onStartRace != null)
+            onStartRace();
     }
 
     public static void TakeDamage(float percent)

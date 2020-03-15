@@ -53,9 +53,9 @@ public class SumScoreExample : MonoBehaviour {
     }
 
     void Update () {
-        if (timed) 
+        if (!timed) 
             // Use Time.deltaTime to create a steady addition of points.
-            // This example would add 100 points per second
-            SumScore.Add(Mathf.RoundToInt(Time.deltaTime * 100));
+            // This example would add 1 points per second
+            SumScore.Add(Mathf.RoundToInt(Time.deltaTime * 1));
     }
 }

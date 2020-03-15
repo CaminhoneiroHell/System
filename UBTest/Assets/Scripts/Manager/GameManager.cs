@@ -12,7 +12,7 @@ public enum GAMESTATUS
 
 public class GameManager : Singleton<GameManager> {
 
-    private GAMESTATUS gmStats;
+    public GAMESTATUS gmStats;
     //private SecretConsole secretConsole;
 
     //States
@@ -32,8 +32,12 @@ public class GameManager : Singleton<GameManager> {
     private FSM fsm;
     public State currentState { get; private set; } //Stores actual state
 
+    public GAMESTATUS isPaused { get; private set; } // Terrible I know 
+    public bool isUsingVR { get; set; }
+
     private void Start()
     {
+        isUsingVR = false;
         //Dont let this object be destroyed
         DontDestroyOnLoad(gameObject);
         //Create machine state
