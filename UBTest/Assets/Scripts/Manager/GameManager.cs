@@ -32,9 +32,7 @@ public class GameManager : Singleton<GameManager> {
     private FSM fsm;
     public State currentState { get; private set; } //Stores actual state
 
-    // public static GameManager instance;
-
-    private void Awake()
+    private void Start()
     {
         //Dont let this object be destroyed
         DontDestroyOnLoad(gameObject);
@@ -110,6 +108,7 @@ public class GameManager : Singleton<GameManager> {
         {
             case GAMESTATUS.PAUSED:
                 Time.timeScale = 0;
+                System.GC.Collect();
                 break;
             case GAMESTATUS.RUNNING:
                 Time.timeScale = 1;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SelectTrackVRState : MonoBehaviour, IFSMState
 {
-
     public IEnumerator Enter()
     {
+        EventManager.StartVR();
         yield return new WaitForEndOfFrame();
     }
 

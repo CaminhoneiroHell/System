@@ -6,6 +6,7 @@ public class SelectTrackState : MonoBehaviour, IFSMState
 {
     public IEnumerator Enter()
     {
+        EventManager.StartWithNormalCam();
         yield return new WaitForEndOfFrame();
     }
 

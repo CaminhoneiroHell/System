@@ -7,15 +7,14 @@ public class InitState : MonoBehaviour, IFSMState
 
     public IEnumerator Enter()
     {
-        //yield return new WaitForEndOfFrame();
-        //SceneManager.LoadScene("InitState");
-        yield return new WaitForSeconds(0.9f);
-        // GameManager.instance.ChangeState(State.Space);
+        //Splash Screen
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.ChangeState(State.MainScreen);
     }
 
     public IEnumerator Exit()
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.1f);
     }
 
     public void FSMUpdate(){
