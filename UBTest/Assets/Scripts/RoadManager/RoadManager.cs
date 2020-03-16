@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum Rank
+{
+    NORANK,
+    A,
+    S,
+    SS
+};
+
 public class RoadManager : MonoBehaviour
 {
     [SerializeField] int curCheckPoint, lastCheckPoint;
     [SerializeField] int checkPointCounter;
     [SerializeField] int lap = 1;
     [SerializeField] int totalLapsToFinish = 3;
+
+
+    public GameObject VRCamera, NormalCamera;
 
 
     public CameraFollow360 cam360;
@@ -19,22 +30,63 @@ public class RoadManager : MonoBehaviour
     public Image sempaphoreLed1, sempaphoreLed2, sempaphoreLed3;
     public GameObject semaphore;
 
-    float timer = 0.0f; int seconds;
+    private float timer = 0.0f; 
+    [SerializeField] private int seconds;
+    [SerializeField] private int trackFinishTimeByPlayer;
 
-    //public SumScoreExample scoreManager;
+    [Header("Total Time to get rank A")]
+    [SerializeField] private int rankAValue = 100;
+
+    [Header("Total Time to get rank S")]
+    [SerializeField] private int rankSValue = 80;
+
+    [Header("Total Time to get rank SS")]
+    [SerializeField] private int rankSSValue = 60;
+
+    public Rank rank;
 
     void OnEnable()
     {
         //EventManager.onStartRace += ...
-        EventManager.onRaceFinished += SelectScene; //EndLevel;
+        EventManager.onRaceFinished += CalculateRank; //EndLevel;
     }
 
     void OnDisable()
     {
-        EventManager.onRaceFinished -= SelectScene;//EndLevel;
+        EventManager.onRaceFinished -= CalculateRank;//EndLevel;
     }
 
-    //bool isVR = false;
+    void CalculateRank()
+    {
+        if(trackFinishTimeByPlayer < rankAValue)
+        {
+            print("1 star");
+            rank = Rank.A;
+            if(trackFinishTimeByPlayer < rankSValue)
+            {
+                print("2 star");
+                rank = Rank.S;
+                if (trackFinishTimeByPlayer < rankSSValue)
+                {
+                    print("3 star");
+                    rank = Rank.SS;
+                }
+            }
+        }
+
+        rank = Rank.NORANK;
+
+        StartCoroutine(ShowRank());
+    }
+
+    IEnumerator ShowRank()
+    {
+        //Show on UI the players rank and persists it
+        print("Congratulations your rank is: " + rank);
+        yield return new WaitForSeconds(5f);
+        SelectScene();
+    }
+
     void SelectScene()
     {
         if (GameManager.Instance.isUsingVR)
@@ -64,12 +116,19 @@ public class RoadManager : MonoBehaviour
         EventManager.StartRace();
         cam360.GetComponent<CameraFollow360>();
         //scoreManager.GetComponent<SumScoreExample>();
+        
+        if (GameManager.Instance.isUsingVR)
+        {
+            VRCamera.SetActive(true);
+            NormalCamera.SetActive(false);
+        }
 
-        if (enableIntro)
+        if (enableIntro && !GameManager.Instance.isUsingVR)
         {
             cam360.distance = -50;
             playerController.GetComponent<PlayerController>().enabled = false;
-        }
+        } else
+            toogleClock = true;
 
     }
 
@@ -113,6 +172,7 @@ public class RoadManager : MonoBehaviour
         sempaphoreLed3.color = Color.green;
         playerController.enabled = true;
         print("Go!!!!");
+        toogleClock = true;
         yield return new WaitForSeconds(1f);
         semaphore.SetActive(false);
     }
@@ -135,7 +195,10 @@ public class RoadManager : MonoBehaviour
         }
 
         if (lap > totalLapsToFinish)
+        {
+            trackFinishTimeByPlayer = seconds;
             EventManager.RaceFinished();
+        }
     }
 
 

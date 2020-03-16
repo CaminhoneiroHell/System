@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     CartAnimationController cartAnimation;
     AnglePlayerController anglePlayerController;
-    
+    public Transform playerPositionReset;
+
     [SerializeField] RayCaster[] gravityPoints;
     
     public float gravityForce = 10000f;
@@ -60,11 +61,11 @@ public class PlayerController : MonoBehaviour
 
             //print("Current distance from the ground: " + gravityPoints[i].distanceFromGround);
 
-            if (GameData.road == gravityPoints[i].groundType)
-                print("On the road!");
-            else if (GameData.badGround == gravityPoints[i].groundType)
+            //if (GameData.road == gravityPoints[i].groundType)
+            //    print("On the road!");
+            if (GameData.badGround == gravityPoints[i].groundType)
             {
-                print("On badroad!");
+                //print("On badroad!");
                 if(throotle > 1.5f){
                     throotle -= 0.5f * Time.deltaTime;
                 }
@@ -123,7 +124,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
+        if(gameObject.transform.position.y < 4.8)
+        {
+            timer += Time.deltaTime;
+            if(timer > 1.0f)
+            {
+                PlayerPositionReset();
+                print("Reset Position");
+            }
+        }
+
     }
+
+    float timer;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -142,5 +157,11 @@ public class PlayerController : MonoBehaviour
         {
             //transform.Translate(Vector3.left * 100f / 3.6f * Time.deltaTime);
         }
+    }
+
+    public Vector3 PlayerPositionReset()
+    {
+        throotle = 0;
+        return gameObject.transform.position = playerPositionReset.position;
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VRMenuState : MonoBehaviour, IFSMState
 {
     public IEnumerator Enter()
     {
-        GameManager.Instance.isUsingVR = true;
+        //SceneManager.LoadScene("VRTrackSelectScreen");
+        //GameManager.Instance.isUsingVR = true;
         yield return new WaitForEndOfFrame();
     }
 

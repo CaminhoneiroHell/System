@@ -173,7 +173,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
+  m_TargetEye: 0
   m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
@@ -417,6 +417,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2093476841, guid: 2eb68fa9b035b8d4d8710b09d5bf36c8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2093476843, guid: 2eb68fa9b035b8d4d8710b09d5bf36c8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2093476843, guid: 2eb68fa9b035b8d4d8710b09d5bf36c8, type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4308902567692141209, guid: 2eb68fa9b035b8d4d8710b09d5bf36c8,
         type: 3}
       propertyPath: m_Animation

@@ -10,6 +10,7 @@ public class MooMooFarmRaceState : MonoBehaviour, IFSMState
     {
         //yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("FarmRoad");
+        
         yield return new WaitForEndOfFrame();
     }
 

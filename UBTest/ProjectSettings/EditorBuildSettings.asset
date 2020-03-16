@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FarmRoad.unity
     guid: 4aad9f8fab492c9419adff65947a22d2
+  - enabled: 1
+    path: Assets/Scenes/VRTrackSelectScreen.unity
+    guid: 837cc22d973b7624c9fe1a2fddee8886
   m_configObjects: {}

@@ -9,7 +9,6 @@ public class MainScreenState : MonoBehaviour, IFSMState
     public IEnumerator Enter()
     {
         SceneManager.LoadScene("Main");
-
         yield return new WaitForEndOfFrame();
     }
 

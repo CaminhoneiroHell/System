@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameModeSelect;
     public GameObject trackSelectNonVR;
     public GameObject dummyCamera;
-
+    public Text vrAdiviseText;
     bool isDisplayed = true;
 
     void OnEnable()
@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
         EventManager.onStartGame += HideSplashScreen;
         EventManager.onStartNormalCam += SelectTrackMode;
         EventManager.onStartRace += HideTrackSelect;
+        EventManager.onStartVR += EnterVRMode;
     }
 
     void OnDisable()
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
         EventManager.onStartGame -= HideSplashScreen;
         EventManager.onStartNormalCam -= SelectTrackMode;
         EventManager.onStartRace -= HideTrackSelect;
+        EventManager.onStartVR -= EnterVRMode;
     }
     private void Awake()
     {
@@ -32,6 +34,22 @@ public class UIManager : MonoBehaviour
     }
 
     //UI Logic toogled by events
+    void EnterVRMode()
+    {
+        gameModeSelect.SetActive(false);
+        vrAdiviseText.enabled = true;
+        StartCoroutine(LoadVRMenuStateScene());
+    }
+
+    IEnumerator LoadVRMenuStateScene()
+    {
+        yield return new WaitForSeconds(5f);
+        dummyCamera.SetActive(false);
+        vrAdiviseText.enabled = false;
+        GameManager.Instance.ChangeState(State.SelectTrackVR);
+        yield return new WaitForSeconds(1f);
+
+    }
 
     void HideSplashScreen()
     {

@@ -1,10 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public enum RayCastDirection
 {
     FOWARD,
+    FOWARD2,
     BEHIND,
     LEFT,
     RIGHT,
@@ -18,6 +20,8 @@ public class RayCaster : MonoBehaviour
     //const int badGround = 9;
     //const int road = 8;
 
+    public Text stageName;
+    public Image crossHair;
     public RayCastDirection rcstDir;
 
     #region Coordination_Variables
@@ -36,6 +40,7 @@ public class RayCaster : MonoBehaviour
 
     private void Start() {
         packed = (1 << 8 | 1 << 9 );
+        //stagePacked = 
         //UnityEngine.Debug.Log("Pack result" + Convert.ToString(packed, 2 ).PadLeft(32, '0'));
     }
 
@@ -44,22 +49,24 @@ public class RayCaster : MonoBehaviour
     public int groundType;
     public float distanceFromGround;
     bool missed;
+
+
+
+    //Again...
+    private float timer = 0.0f;
+    private int seconds;
+    void TimerCounter()
+    {
+        timer += Time.deltaTime;
+        seconds = (int)(timer % 60);
+    }
+
     public Vector3 CastRayDown(int layerMask)
     {
         RaycastHit hitDown;
         Vector3 fwd = transform.TransformDirection(Vector3.down);
         if (Physics.Raycast(transform.position, fwd, out hitDown, maxDistance, layerMask))
         {
-            //Debug.Log("We hit: " + hit.transform.name);
-            //distanceTofloorFwd = hitFoward.collider.gameObject.layer = layerMask;
-            // maxDistance = distanceTofloorFwd;
-
-            //print(Convert.ToString(layerMask, 2).PadLeft(32, '0'));
-            //print("Distance from the collider to object who shooted raycast is: " + hitDown.distance);
-            // print("The collided tag is: " + hitFoward.collider.tag);
-            //print("The collided layer is: " + hitDown.collider.gameObject.layer);
-            //print("Hitting: " + hitDown.collider.gameObject.name);
-
             distanceFromGround = hitDown.distance;
             groundType = hitDown.collider.gameObject.layer;
 
@@ -75,8 +82,18 @@ public class RayCaster : MonoBehaviour
         else
         {
             print("missed");
-            missed = true; //Reset player position on the last checkpoint 
+            //missed = true; //Reset player position on the last checkpoint 
             Debug.DrawRay(transform.position, fwd * maxDistance, Color.red);
+            TimerCounter();
+            
+            if(seconds > 2)
+            {
+                GetComponentInParent<PlayerController>().PlayerPositionReset();
+                print("Reset Position");
+            }
+
+
+
             return transform.position + (transform.forward * maxDistance);
         }
     }
@@ -89,50 +106,52 @@ public class RayCaster : MonoBehaviour
         if (Physics.Raycast(transform.position, fwd, out hitFoward, maxDistance))
         {
             Debug.DrawRay(transform.position, fwd * hitFoward.distance, Color.blue);
-
-            //ReturnAngle();
+            //print("Hitting: " + hitFoward.collider.gameObject.name);
 
             return hitFoward.point;
         }
         else
         {
             Debug.DrawRay(transform.position, fwd * maxDistance, Color.blue);
-
-            //ReturnAngle();
-
             return transform.position + (transform.forward * maxDistance);
 
         }
     }
 
-
-
-
-    public Vector3 CastRayFoward(Color color, int layerMask)
+    public Vector3 CastRayFoward(Color color)
     {
         RaycastHit hitFoward;
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        if (Physics.Raycast(transform.position, fwd, out hitFoward, maxDistance, layerMask ))
+        Vector3 bwd = transform.TransformDirection(Vector3.forward) * maxDistance;
+        Debug.DrawRay(transform.position, bwd, color);
+        if (Physics.Raycast(transform.position, bwd, out hitFoward))
         {
-            //Debug.Log("We hit: " + hit.transform.name);
-            // distanceTofloorFwd = hitFoward.collider.gameObject.layer = layerMask;
-            // maxDistance = distanceTofloorFwd;
-            print(Convert.ToString(layerMask, 2).PadLeft(32, '0'));
+            distanceToFloorbwd = hitFoward.distance;
+            print("The collided tag is: " + hitFoward.collider.tag);
+            stageName.text = ("Stage Name: \n " + hitFoward.collider.tag);
+            crossHair.color = Color.red;
 
-            Debug.DrawRay(transform.position, fwd * hitFoward.distance, color);
-            Debug.Log("Distance from the collider to object who shooted raycast is: " + hitFoward.distance);
-            // print("The collided tag is: " + hitFoward.collider.tag);
-            print("The collided layer is: " + hitFoward.collider.gameObject.layer);
-            print("Hitting: " + hitFoward.collider.gameObject.name);
+            if(hitFoward.collider.tag == "Farm")
+            {
+                StartCoroutine(LoadFarm());
+            }
+            
+            
             return hitFoward.point;
         }
-        else
-        {
-            print("missed");
-            Debug.DrawRay(transform.position, fwd * maxDistance, Color.red);
-            return transform.position + (transform.forward * maxDistance);
-        }
+        //print("Miss");
+        StopCoroutine(LoadFarm());
+        crossHair.color = Color.white;
+        stageName.text = "Stage Name";
+        return transform.position + (transform.forward * -maxDistance);
     }
+
+    IEnumerator LoadFarm()
+    {
+        yield return new WaitForSeconds(2.5f);
+        GameManager.Instance.ChangeState(State.MooMooFarm_race);
+    }
+
+
 
     public Vector3 CastRayBackward()
     {
@@ -209,6 +228,9 @@ public class RayCaster : MonoBehaviour
                 break;
             case RayCastDirection.FOWARD:
                 CastRayFoward();
+                break;
+            case RayCastDirection.FOWARD2:
+                CastRayFoward(Color.blue);
                 break;
             default:
                 break;
