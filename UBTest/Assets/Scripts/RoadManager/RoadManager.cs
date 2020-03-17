@@ -27,8 +27,9 @@ public class RoadManager : MonoBehaviour
     public GameObject[] checkPoints;
     public GameObject racer;
     public PlayerController playerController;
-    public Image sempaphoreLed1, sempaphoreLed2, sempaphoreLed3;
     public GameObject semaphore;
+
+    public Image sempaphoreLed1, sempaphoreLed2, sempaphoreLed3;
 
     private float timer = 0.0f; 
     [SerializeField] private int seconds;
@@ -42,6 +43,9 @@ public class RoadManager : MonoBehaviour
 
     [Header("Total Time to get rank SS")]
     [SerializeField] private int rankSSValue = 60;
+
+    [SerializeField] GameObject raceEndUI;
+    [SerializeField] Text rankTxt;
 
     public Rank rank;
 
@@ -74,17 +78,21 @@ public class RoadManager : MonoBehaviour
 
     void CalculateRank()
     {
-        if(trackFinishTimeByPlayer < rankAValue)
+        raceEndUI.SetActive(true);
+        if (trackFinishTimeByPlayer < rankAValue)
         {
             print("1 star");
             rank = Rank.A;
-            if(trackFinishTimeByPlayer < rankSValue)
+            rankTxt.text = "A";
+            if (trackFinishTimeByPlayer < rankSValue)
             {
                 print("2 star");
+                rankTxt.text = "S";
                 rank = Rank.S;
                 if (trackFinishTimeByPlayer < rankSSValue)
                 {
                     print("3 star");
+                    rankTxt.text = "SS";
                     rank = Rank.SS;
                 }
             }
@@ -92,7 +100,7 @@ public class RoadManager : MonoBehaviour
         else
         {
             rank = Rank.NORANK;
-        }
+        } 
 
         StartCoroutine(ShowRank());
     }
@@ -129,8 +137,10 @@ public class RoadManager : MonoBehaviour
     [SerializeField] bool enableIntro = false;
     private void Start()
     {
+
         curCheckPoint = 0;
         lastCheckPoint = checkPoints.Length - 1;
+        raceEndUI.SetActive(false);
         EventManager.StartRace();
         cam360.GetComponent<CameraFollow360>();
         //scoreManager.GetComponent<SumScoreExample>();

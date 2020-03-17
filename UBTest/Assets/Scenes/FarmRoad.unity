@@ -1374,7 +1374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd2e8874f60266498a388d7229a1bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnlyDeactivate: 0
 --- !u!199 &418428674
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -11413,6 +11412,36 @@ Transform:
   m_Father: {fileID: 2095896973}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &624003999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 624004000}
+  m_Layer: 0
+  m_Name: Respawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &624004000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624003999}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 289.1136, y: 27.4, z: -556.54266}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &654691268
 GameObject:
   m_ObjectHideFlags: 0
@@ -11881,15 +11910,17 @@ MonoBehaviour:
   - {fileID: 1319229355}
   racer: {fileID: 179074241}
   playerController: {fileID: 179074247}
+  semaphore: {fileID: 355460435}
   sempaphoreLed1: {fileID: 1197360069}
   sempaphoreLed2: {fileID: 359034110}
   sempaphoreLed3: {fileID: 799544216}
-  semaphore: {fileID: 355460435}
   seconds: 0
   trackFinishTimeByPlayer: 0
   rankAValue: 100
   rankSValue: 80
   rankSSValue: 60
+  raceEndUI: {fileID: 865734535}
+  rankTxt: {fileID: 1959550685}
   rank: 0
   enableIntro: 1
 --- !u!1 &701313165
@@ -18247,6 +18278,12 @@ Transform:
   m_Father: {fileID: 2095896973}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &865734535 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 865734535, guid: afcc3c35b02616d43a61ba12025c65cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1557818631351375993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &880007705 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5963253759993302415, guid: fd4feb87d2e87094fbb334c70fed6bbf,
@@ -18426,7 +18463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd2e8874f60266498a388d7229a1bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnlyDeactivate: 0
 --- !u!199 &956541981
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -25669,6 +25705,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1959550685 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1959550685, guid: afcc3c35b02616d43a61ba12025c65cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1557818631351375993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1970125986 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8765305712819358293, guid: fd4feb87d2e87094fbb334c70fed6bbf,
@@ -25845,6 +25893,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 865734535, guid: afcc3c35b02616d43a61ba12025c65cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1557818631770633521, guid: afcc3c35b02616d43a61ba12025c65cd,
         type: 3}
       propertyPath: m_Name
@@ -26024,6 +26076,11 @@ PrefabInstance:
       propertyPath: playerPositionReset
       value: 
       objectReference: {fileID: 179074246}
+    - target: {fileID: 5868303825037419022, guid: fd4feb87d2e87094fbb334c70fed6bbf,
+        type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 624003999}
     - target: {fileID: 5868303825037419023, guid: fd4feb87d2e87094fbb334c70fed6bbf,
         type: 3}
       propertyPath: m_LocalPosition.x

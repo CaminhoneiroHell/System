@@ -6,6 +6,7 @@ public class CartAnimationController : MonoBehaviour
 {
 	// Start is called before the first frame update
 	[SerializeField] float wheelSpeed = 10f;
+
     void Update()
     {
 		ExhaustShake();

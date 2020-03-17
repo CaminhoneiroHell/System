@@ -81,11 +81,11 @@ public class UIManager : MonoBehaviour
         {
             dummyCamera.SetActive(true);
             PauseMenu(true);
-            print("HERE");
+            //print("HERE updating, correct this");
         }
-        else if(GameManager.Instance.gameLayerStatus == GAMESTATUS.RUNNING)
+        else if(GameManager.Instance.gameLayerStatus == GAMESTATUS.RUNNING && dummyCamera)
         {
-
+            //print("updating, correct this");
             dummyCamera.SetActive(false);
             PauseMenu(false);
         }
