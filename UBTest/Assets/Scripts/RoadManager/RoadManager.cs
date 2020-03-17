@@ -47,13 +47,29 @@ public class RoadManager : MonoBehaviour
 
     void OnEnable()
     {
-        //EventManager.onStartRace += ...
+        EventManager.onStartRace += UpdateGameStatusToRunningForEnablePauseMenu;//BeginLevel
         EventManager.onRaceFinished += CalculateRank; //EndLevel;
+        
+        EventManager.onRaceFinished += UpdateGameStatusToRunningForDisanablePauseMenu; //EndLevel;
     }
 
     void OnDisable()
     {
+        EventManager.onStartRace -= UpdateGameStatusToRunningForEnablePauseMenu;//Begin level
         EventManager.onRaceFinished -= CalculateRank;//EndLevel;
+        
+        EventManager.onRaceFinished -= UpdateGameStatusToRunningForDisanablePauseMenu;//EndLevel;
+    }
+
+    //public GAMESTATUS isPaused { get; private set; } // Terrible I know 
+
+    void UpdateGameStatusToRunningForEnablePauseMenu()
+    {
+        GameManager.Instance.gameLayerStatus = GAMESTATUS.RUNNING;
+    }
+    void UpdateGameStatusToRunningForDisanablePauseMenu()
+    {
+        GameManager.Instance.gameLayerStatus = GAMESTATUS.INIT;
     }
 
     void CalculateRank()

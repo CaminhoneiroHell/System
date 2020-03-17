@@ -77,13 +77,18 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && GameManager.Instance.currentState == State.MainScreen)
             PlayGame();
 
-        if (GameManager.Instance.isPaused == GAMESTATUS.PAUSED)
-        { 
+        if (GameManager.Instance.gameLayerStatus == GAMESTATUS.PAUSED)
+        {
+            dummyCamera.SetActive(true);
             PauseMenu(true);
             print("HERE");
         }
-        else if(GameManager.Instance.isPaused == GAMESTATUS.RUNNING)
+        else if(GameManager.Instance.gameLayerStatus == GAMESTATUS.RUNNING)
+        {
+
+            dummyCamera.SetActive(false);
             PauseMenu(false);
+        }
     }
 
     public void PlayGame()

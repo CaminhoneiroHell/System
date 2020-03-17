@@ -12,7 +12,7 @@ public enum GAMESTATUS
 
 public class GameManager : Singleton<GameManager> {
 
-    public GAMESTATUS gmStats;
+    //public GAMESTATUS gmStats;
     //private SecretConsole secretConsole;
 
     //States
@@ -32,7 +32,7 @@ public class GameManager : Singleton<GameManager> {
     private FSM fsm;
     public State currentState { get; private set; } //Stores actual state
 
-    public GAMESTATUS isPaused { get; private set; } // Terrible I know 
+    public GAMESTATUS gameLayerStatus { get; set ; } // Terrible I know 
     public bool isUsingVR { get; set; }
 
     private void Start()
@@ -107,8 +107,8 @@ public class GameManager : Singleton<GameManager> {
 
     private void GamePauseToogle(GAMESTATUS gm)
     {
-        gmStats = gm;
-        switch (gmStats)
+        gameLayerStatus = gm;
+        switch (gameLayerStatus)
         {
             case GAMESTATUS.PAUSED:
                 Time.timeScale = 0;
@@ -127,7 +127,7 @@ public class GameManager : Singleton<GameManager> {
         //print(Time.timeScale);
         if (Input.GetKeyDown(KeyCode.Escape) )
         {
-            if(gmStats != GAMESTATUS.PAUSED)
+            if(gameLayerStatus != GAMESTATUS.PAUSED)
             {
                 GamePauseToogle(GAMESTATUS.PAUSED); 
                 print("PAUSED");
