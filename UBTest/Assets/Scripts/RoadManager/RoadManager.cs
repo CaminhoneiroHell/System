@@ -45,7 +45,9 @@ public class RoadManager : MonoBehaviour
     [SerializeField] private int rankSSValue = 60;
 
     [SerializeField] GameObject raceEndUI;
-    [SerializeField] Text rankTxt;
+    [SerializeField] Text rankFinalDisplay;
+
+    public Text lapUI, rankUI, timerUI, bestTimeUI;
 
     public Rank rank;
 
@@ -83,16 +85,19 @@ public class RoadManager : MonoBehaviour
         {
             print("1 star");
             rank = Rank.A;
-            rankTxt.text = "A";
+            rankFinalDisplay.text = "A";
+            rankUI.text = "A";
             if (trackFinishTimeByPlayer < rankSValue)
             {
                 print("2 star");
-                rankTxt.text = "S";
+                rankFinalDisplay.text = "S";
+                rankUI.text = "S";
                 rank = Rank.S;
                 if (trackFinishTimeByPlayer < rankSSValue)
                 {
                     print("3 star");
-                    rankTxt.text = "SS";
+                    rankFinalDisplay.text = "SS";
+                    rankUI.text = "SS";
                     rank = Rank.SS;
                 }
             }
@@ -128,9 +133,9 @@ public class RoadManager : MonoBehaviour
         seconds = (int)(timer % 60);
     }
 
-    void ResetTimer()
+    void DisplayTimerUI()
     {
-        timer = 0.0f;
+        timerUI.text = timer.ToString("0.00");
     }
 
     [Header("Enable intro cutscene before start")]
@@ -177,7 +182,10 @@ public class RoadManager : MonoBehaviour
         }
 
         if (toogleClock)
+        {
             TimerCounter();
+            DisplayTimerUI();
+        }
     }
 
     bool semaphoreStartCount;
@@ -216,8 +224,10 @@ public class RoadManager : MonoBehaviour
             curCheckPoint = 0;//Reset checkPoint back to 0
             checkPointCounter = 0;
             print("Lap: " + lap);
-            if(lap == totalLapsToFinish)
+            lapUI.text = lap.ToString();
+            if (lap == totalLapsToFinish)
             {
+                lapUI.text = "Final Lap";
                 print("Final Lap");
             }
         }
