@@ -89,8 +89,10 @@ public class RoadManager : MonoBehaviour
                 }
             }
         }
-
-        rank = Rank.NORANK;
+        else
+        {
+            rank = Rank.NORANK;
+        }
 
         StartCoroutine(ShowRank());
     }

@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     CartAnimationController cartAnimation;
     AnglePlayerController anglePlayerController;
-    public Transform playerPositionReset;
+    public Vector3 playerPositionReset;
 
     [SerializeField] RayCaster[] gravityPoints;
     
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         Quaternion turnWheel = Quaternion.Euler(0f, 0f, rotation);
         transform.Rotate(turn.eulerAngles, Space.Self);
         
-        if(Input.GetAxis("Horizontal") == 1 || Input.GetAxis("Horizontal") == -1)
+        if(Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0)
         {
             throotle -= 0.01f * Time.deltaTime;
             cartAnimation.steeringWheel.transform.Rotate(turnWheel.eulerAngles, Space.Self); //Anim steering wheel
@@ -135,33 +135,33 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
+        //Boost
+
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    boost = 5f;
+        //    if (boost > 0.1f)
+        //    {
+        //        boost -= 0.2f * Time.deltaTime;
+        //        transform.Translate(Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle * boost);
+        //        //SpawnParticles
+        //    }
+        //}
+        //else
+        //    boost = 0.1f;
+
     }
 
     float timer;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            boost = 5f;
-            if(boost > 0.1f)
-            {
-                boost -= 0.2f * Time.deltaTime;
-                //SpawnParticles
-            }
-        }
-        else
-            boost = 0.1f;
-
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            //transform.Translate(Vector3.left * 100f / 3.6f * Time.deltaTime);
-        }
     }
 
     public Vector3 PlayerPositionReset()
     {
         throotle = 0;
-        return gameObject.transform.position = playerPositionReset.position;
+        return gameObject.transform.position = playerPositionReset;
     }
 }
