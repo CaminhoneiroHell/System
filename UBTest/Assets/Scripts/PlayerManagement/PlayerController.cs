@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public IUnityService unityService;
+
 
     Rigidbody rb;
     CartAnimationController cartAnimation;
@@ -22,6 +26,10 @@ public class PlayerController : MonoBehaviour
 
         anglePlayerController = GetComponent<AnglePlayerController>();
         cartAnimation = GetComponent<CartAnimationController>();
+
+
+        if (unityService == null)
+            unityService = new UnityService();
     }
 
     [SerializeField] float throotle = 0.0f;
@@ -34,15 +42,16 @@ public class PlayerController : MonoBehaviour
 
     void Acceleration()
     {
-        transform.Translate(Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle);
+        transform.Translate(Vector3.forward * 100f / 3.6f * unityService.GetDeltaTime() * throotle);
     }
 
     [SerializeField] bool isGrounded;
     private void FixedUpdate()
     {
+        Acceleration();
+
         for (int i = 0; i < gravityPoints.Length; i++)
         {
-
             var wheelPos = gravityPoints[i];
             if (gravityPoints[i].distanceFromGround > 1.6f)
             {
@@ -68,7 +77,7 @@ public class PlayerController : MonoBehaviour
                 //print("On badroad!");
                 if (throotle > 1.5f)
                 {
-                    throotle -= 0.5f * Time.deltaTime;
+                    throotle -= 0.5f * unityService.GetDeltaTime();
                 }
             }
         }
@@ -79,57 +88,58 @@ public class PlayerController : MonoBehaviour
 
         //Rotation
 
-        var rotation = Input.GetAxis("Horizontal") * rotationSpeed;
+        var rotation = unityService.GetAxis("Horizontal") * rotationSpeed;
         //var wheelRotation = Input.GetAxis("Horizontal") * wheelrotationSpeed;
-        rotation *= Time.deltaTime;
+        rotation *= unityService.GetDeltaTime();
         Quaternion turn = Quaternion.Euler(anglePlayerController.pitchFoward, rotation, 0f);
         Quaternion turnWheel = Quaternion.Euler(0f, 0f, rotation);
         transform.Rotate(turn.eulerAngles, Space.Self);
 
-        if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0)
+        if (unityService.GetAxis("Horizontal") > 0 || unityService.GetAxis("Horizontal") < 0)
         {
-            throotle -= 0.01f * Time.deltaTime;
+            throotle -= 0.01f * unityService.GetDeltaTime();
             cartAnimation.steeringWheel.transform.Rotate(turnWheel.eulerAngles, Space.Self); //Anim steering wheel
             //cartAnimation.wheelBack.transform.Rotate(turn.eulerAngles, Space.Self); //Anim steering wheel
-            //cartAnimation.wheelFront.transform.Rotate(turn.eulerAngles, Space.Self); //Anim steering wheel
+            //cartAnimation.wheelFront.transform.Rotate(turn.eulerAngles, Space.Self); //Anim steering wheel+
+
             print("Loosing speed during curve");
         }
 
 
-        Acceleration();
+       
 
         //Front
-        if (Input.GetAxis("Vertical") > 0)
+        if (unityService.GetAxis("Vertical") > 0)
         {
             //print(Input.GetAxis("Vertical"));
             if (throotle < maxAccelerationSpeed)
             {
-                throotle += 0.4f * Time.deltaTime;
+                throotle += 0.4f * unityService.GetDeltaTime();
             }
         }
 
         //Back
-        if (Input.GetAxis("Vertical") == -1)
+        if (unityService.GetAxis("Vertical") == -1)
         {
             if (throotle < maxAccelerationSpeedBackwards)
             {
-                throotle += 0.4f * Time.deltaTime;
-                transform.Translate(-Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle);
+                throotle += 0.4f * unityService.GetDeltaTime();
+                transform.Translate(-Vector3.forward * 100f / 3.6f * unityService.GetDeltaTime() * throotle);
             }
         }
 
-        if (Input.GetAxis("Vertical") != 1)
+        if (unityService.GetAxis("Vertical") != 1)
         {
             if (throotle > minAccelerationSpeed)
             {
-                throotle -= 0.2f * Time.deltaTime;
+                throotle -= 0.2f * unityService.GetDeltaTime();
             }
         }
 
 
         if (gameObject.transform.position.y < 4.8)
         {
-            timer += Time.deltaTime;
+            timer += unityService.GetDeltaTime();
             if (timer > 1.0f)
             {
                 PlayerPositionReset();
@@ -148,8 +158,8 @@ public class PlayerController : MonoBehaviour
             //    boost = 5f;
             //    if (boost > 0.1f)
             //    {
-            //        boost -= 0.2f * Time.deltaTime;
-            //        transform.Translate(Vector3.forward * 100f / 3.6f * Time.deltaTime * throotle * boost);
+            //        boost -= 0.2f * unityService.GetDeltaTime();
+            //        transform.Translate(Vector3.forward * 100f / 3.6f * unityService.GetDeltaTime() * throotle * boost);
             //        //SpawnParticles
             //    }
             //}

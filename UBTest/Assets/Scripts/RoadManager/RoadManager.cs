@@ -67,8 +67,6 @@ public class RoadManager : MonoBehaviour
         EventManager.onRaceFinished -= UpdateGameStatusToRunningForDisanablePauseMenu;//EndLevel;
     }
 
-    //public GAMESTATUS isPaused { get; private set; } // Terrible I know 
-
     void UpdateGameStatusToRunningForEnablePauseMenu()
     {
         GameManager.Instance.gameLayerStatus = GAMESTATUS.RUNNING;
