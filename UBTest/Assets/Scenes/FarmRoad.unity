@@ -6582,6 +6582,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 179074250, guid: fd4feb87d2e87094fbb334c70fed6bbf, type: 3}
+      propertyPath: m_sideFrct_Stiff
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 179074252, guid: fd4feb87d2e87094fbb334c70fed6bbf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5868303825037419016, guid: fd4feb87d2e87094fbb334c70fed6bbf,
         type: 3}
       propertyPath: m_Name

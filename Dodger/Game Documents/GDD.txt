@@ -1,0 +1,16 @@
+Interessante:
+> Slowtime quando estiver perto de morrer a primeira vez
+
+
+Desejavel
+> Alterar em tempo real quando esta em VR e n esta e atualiza o estado do jogo conforme
+> Inimigo que atira facas (VR/Normal)
+> Gameplay gradual
+> Powerups (slow time, reverse enemies, indestructible for a time) 
+
+
+Necessarias:
+> Mecanica boa, ser divertido.
+> Inimigos que caem de tamanhos diferentes e velocidades diferentes
+> Score system
+> Começo, pause, level select, fim.
