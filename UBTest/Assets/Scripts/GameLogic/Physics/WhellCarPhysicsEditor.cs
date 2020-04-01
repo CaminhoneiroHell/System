@@ -84,68 +84,58 @@ public class WhellCarPhysicsEditor : MonoBehaviour
 
             w.sidewaysFriction = sideFrictionCurve;
 
+            //var x = wheelColliders.Find(WheelCollider => WheelCollider.gameObject.name == "FRW");
+            //if (x != null)
+                //print("FRW rpm = " + x.rpm);
         }
 
     }
 
-    [SerializeField]float torque;
-    [SerializeField] float breakTorque = 1000000;
-    [SerializeField] float steer;
+    //[SerializeField]float torque;
+    //[SerializeField] float breakTorque = 1000000;
+    //[SerializeField] float steer;
 
-    float maxRot = 40.0f;
-    float minRot = -40.0f;
+    //float maxRot = 40.0f;
+    //float minRot = -40.0f;
 
-    float maxVelocity = 99999, minVel = 0;
+    //float maxVelocity = 99999, minVel = 0;
     
-    [SerializeField] float rotationSpeed = 50.0F;
-    private void FixedUpdate()
-    {
-        //Rotation
-        var rotation = unityService.GetAxis("Horizontal") * rotationSpeed;
-        rotation *= unityService.GetDeltaTime();
-        Quaternion turn = Quaternion.Euler(0f, rotation, 0f);
-        Quaternion turnWheel = Quaternion.Euler(0f, 0f, rotation);
-        transform.Rotate(turn.eulerAngles, Space.Self);
+    //[SerializeField] float rotationSpeed = 50.0F;
+    //private void FixedUpdate()
+    //{
+    //    //Rotation
+    //    var rotation = unityService.GetAxis("Horizontal") * rotationSpeed;
+    //    rotation *= unityService.GetDeltaTime();
+    //    Quaternion turn = Quaternion.Euler(0f, rotation, 0f);
+    //    Quaternion turnWheel = Quaternion.Euler(0f, 0f, rotation);
+    //    transform.Rotate(turn.eulerAngles, Space.Self);
 
 
-        foreach (WheelCollider w in wheelColliders)
-        {
-            w.motorTorque = torque * 100f / 3.6f;
-            if(unityService.GetAxis("Vertical") > 0 && torque < maxVelocity && unityService.GetAxis("Horizontal") == 0)
-            {
-                torque += 400 * Time.deltaTime;
-            }else if(unityService.GetAxis("Vertical") == 0 && torque > minVel)
-            {
-                torque -= 650 * Time.deltaTime;
+    //    foreach (WheelCollider w in wheelColliders)
+    //    {
+    //        w.motorTorque = torque * 100f / 3.6f;
+    //        if(unityService.GetAxis("Vertical") > 0 && torque < maxVelocity && unityService.GetAxis("Horizontal") == 0)
+    //        {
+    //            torque += 400 * Time.deltaTime;
+    //        }else if(unityService.GetAxis("Vertical") == 0 && torque > minVel)
+    //        {
+    //            torque -= 650 * Time.deltaTime;
                 
-            }
+    //        }
 
-            if (torque < minVel)
-                torque = 0;
-
-            //if (unityService.GetAxis("Horizontal") > 0 && w.steerAngle < maxRot)
-            //{
-            //    w.steerAngle += steer * Time.deltaTime;
-            //    //torque -= 500 * Time.deltaTime;
-            //}
-            //else if (unityService.GetAxis("Horizontal") < 0 && w.steerAngle > minRot)
-            //{
-            //    w.steerAngle -= steer * Time.deltaTime;
-            //    //torque -= 500 * Time.deltaTime;
-
-            //}
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                w.motorTorque = 0;
-                w.brakeTorque += breakTorque * Time.deltaTime;
-                print("Breaking" + w.brakeTorque);
-            }
-            else if (Input.GetKeyUp(KeyCode.Space))
-            {
-                w.brakeTorque = 0;
-                //breakTorque = 0;
-            }
-        }
-    }
+    //        if (torque < minVel)
+    //            torque = 0;
+    //        if (Input.GetKey(KeyCode.Space))
+    //        {
+    //            w.motorTorque = 0;
+    //            w.brakeTorque += breakTorque * Time.deltaTime;
+    //            print("Breaking" + w.brakeTorque);
+    //        }
+    //        else if (Input.GetKeyUp(KeyCode.Space))
+    //        {
+    //            w.brakeTorque = 0;
+    //            //breakTorque = 0;
+    //        }
+    //    }
+    //}
 }

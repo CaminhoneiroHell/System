@@ -18,6 +18,6 @@ public class UnityServices : IUNityServices
 
     public float GetDeltaTime()
     {
-        throw new System.NotImplementedException();
+        return Time.deltaTime;
     }
 }
