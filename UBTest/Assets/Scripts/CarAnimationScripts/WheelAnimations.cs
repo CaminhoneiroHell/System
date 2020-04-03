@@ -4,47 +4,56 @@ using UnityEngine;
 
 public class WheelAnimations : MonoBehaviour
 {
+    [SerializeField]
     float rotationAngle;
+
+    [SerializeField] float defaultRotationAngle;
     
-    [SerializeField] GameObject[] wheels;
-    
-    [SerializeField] float minAngle, maxAngle;
-    [SerializeField] Quaternion euler;
-    void Update()
+    [SerializeField] GameObject[] axles;
+    [SerializeField] GameObject steeringWheel;
+
+    [SerializeField] int axleTurnSpeedAnim = 3;
+
+    WhellCarPhysicsEditor wheelCarInfo;
+
+    void Start()
     {
+        wheelCarInfo = GetComponent<WhellCarPhysicsEditor>();
+    }
 
-        for (int i = 0; i < wheels.Length; i++)
+    void FixedUpdate()
+    {
+        //Axles
+        for (int i = 0; i < axles.Length; i++)
         {
-            euler = transform.rotation;
-             
+            //Animate wheel steering
+            rotationAngle = (Time.deltaTime * axleTurnSpeedAnim * Input.GetAxis("Horizontal"));
+            axles[i].transform.localRotation = Quaternion.Euler(transform.localRotation.x, rotationAngle + 90, transform.localRotation.z);
+
+            //Animate wheel rotating fowards
+            var rotation = wheelCarInfo.ReturnRPMs() * 3;
+            rotation *= Time.deltaTime;
+            Quaternion turnWheel = Quaternion.Euler(0f, 0f, rotation);
+            axles[i].transform.Rotate(turnWheel.eulerAngles, Space.Self);
         }
 
-
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            print("Right");
-            for (int i = 0; i < wheels.Length; i++)
-            {
-                if((rotationAngle) < maxAngle)
-                {
-                    rotationAngle = Time.time * 1;
-                    wheels[i].transform.localRotation = Quaternion.Euler(0, rotationAngle + 90, 0);
-                }
-            }
-        }
-
-        if (Input.GetAxis("Horizontal") < 0)
-        {
-
-        }
-
-
-        //for (int i = 0; i < wheels.Length; i++)
-        //{
-        //    rotationAngle = (Mathf.Cos(Time.time) * 180) / Mathf.PI * 0.5f;
-        //    rotationAngle = Mathf.Clamp(rotationAngle, minAngle, maxAngle); 
-        //    wheels[i].transform.localRotation = Quaternion.Euler(0, rotationAngle + 90, 0);
-        //}
+        //SteeringWheel
+        steeringWheel.transform.localRotation = Quaternion.Euler(-150, transform.localRotation.y, rotationAngle);
 
     }
 }
+
+////Rotation
+//var rotation = unityService.GetAxis("Horizontal") * rotationSpeed;
+//rotation *= unityService.GetDeltaTime();
+//Quaternion turn = Quaternion.Euler(anglePlayerController.pitchFoward, rotation, 0f);
+//Quaternion turnWheel = Quaternion.Euler(0f, 0f, rotation);
+//transform.Rotate(turn.eulerAngles, Space.Self);
+
+//if (unityService.GetAxis("Horizontal") > 0 || unityService.GetAxis("Horizontal") < 0)
+//{
+//    throotle -= 0.01f * unityService.GetDeltaTime();
+//    cartAnimation.steeringWheel.transform.Rotate(turnWheel.eulerAngles, Space.Self); //Anim steering wheel
+
+//    print("Loosing speed during curve");
+//}

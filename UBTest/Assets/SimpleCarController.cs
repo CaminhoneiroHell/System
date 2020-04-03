@@ -9,6 +9,7 @@ public class Axle {
     public WheelCollider rightWheel;
     public bool motor;
     public bool steering;
+    public bool boost;
 }
      
 public class SimpleCarController : MonoBehaviour {
@@ -37,7 +38,7 @@ public class SimpleCarController : MonoBehaviour {
      
     public void FixedUpdate()
     {
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
+        float torque = maxMotorTorque * Input.GetAxis("Vertical");
         float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
         //breakInfo
         foreach (Axle axleInfo in axleInfos) {
@@ -47,13 +48,13 @@ public class SimpleCarController : MonoBehaviour {
             }
             if (axleInfo.motor){
                 RemoveBreakTorque(axleInfo);
-                axleInfo.leftWheel.motorTorque = motor;
-                axleInfo.rightWheel.motorTorque = motor;
+                axleInfo.leftWheel.motorTorque = torque;
+                axleInfo.rightWheel.motorTorque = torque;
             }
             if (Input.GetKey(KeyCode.Space))
             {
                 print("Breaking");
-                motor = 0;
+                torque = 0;
                 axleInfo.leftWheel.brakeTorque = maxMotorTorque * breakForce;
                 axleInfo.rightWheel.brakeTorque = maxMotorTorque * breakForce;
 
@@ -64,10 +65,23 @@ public class SimpleCarController : MonoBehaviour {
             {
                 RemoveBreakTorque(axleInfo);
             }
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                StartCoroutine(BoostRoutine());
+                //axleInfo.leftWheel.motorTorque = maxMotorTorque * 111;
+                //axleInfo.rightWheel.motorTorque = maxMotorTorque * 111;
+            }
 
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
+    }
+
+    IEnumerator BoostRoutine()
+    {
+        gameObject.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.forward) * 150, ForceMode.Acceleration);
+        print("Giving force: " + Time.time);
+        yield return new WaitForSeconds(4f);
     }
 
     void RemoveBreakTorque(Axle wheel)

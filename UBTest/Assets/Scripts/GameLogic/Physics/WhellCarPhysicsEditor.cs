@@ -42,6 +42,8 @@ public class WhellCarPhysicsEditor : MonoBehaviour
 
     public IUnityService unityService;
 
+    public float Rpm { get; private set; }
+
     private void Start()
     {
         if (unityService == null)
@@ -50,10 +52,8 @@ public class WhellCarPhysicsEditor : MonoBehaviour
 
     private void Update()
     {
-        foreach(WheelCollider w in wheelColliders)
+        foreach (WheelCollider w in wheelColliders)
         {
-            //print(wheelColliders.Find(x => x.gameObject.name.Contains("F")));
-            
             //Collision
             w.mass = m_wheelMass;
             w.wheelDampingRate = m_wheelDampingRate;
@@ -84,12 +84,18 @@ public class WhellCarPhysicsEditor : MonoBehaviour
 
             w.sidewaysFriction = sideFrictionCurve;
 
-            //var x = wheelColliders.Find(WheelCollider => WheelCollider.gameObject.name == "FRW");
-            //if (x != null)
-                //print("FRW rpm = " + x.rpm);
-        }
+            //Wheels rotations per minute
+            Rpm = w.rpm;
 
+        }
     }
+
+    public float ReturnRPMs()
+    {
+        //print(RpmF);
+        return Rpm;
+    }
+
 
     //[SerializeField]float torque;
     //[SerializeField] float breakTorque = 1000000;
@@ -99,7 +105,7 @@ public class WhellCarPhysicsEditor : MonoBehaviour
     //float minRot = -40.0f;
 
     //float maxVelocity = 99999, minVel = 0;
-    
+
     //[SerializeField] float rotationSpeed = 50.0F;
     //private void FixedUpdate()
     //{
@@ -120,7 +126,7 @@ public class WhellCarPhysicsEditor : MonoBehaviour
     //        }else if(unityService.GetAxis("Vertical") == 0 && torque > minVel)
     //        {
     //            torque -= 650 * Time.deltaTime;
-                
+
     //        }
 
     //        if (torque < minVel)
