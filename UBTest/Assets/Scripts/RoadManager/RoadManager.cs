@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -69,8 +70,16 @@ public class RoadManager : MonoBehaviour
 
     void UpdateGameStatusToRunningForEnablePauseMenu()
     {
-        GameManager.Instance.gameLayerStatus = GAMESTATUS.RUNNING;
+        try
+        {
+            GameManager.Instance.gameLayerStatus = GAMESTATUS.RUNNING;
+        }
+        catch (Exception e)
+        {
+            print("error");
+        }
     }
+
     void UpdateGameStatusToRunningForDisanablePauseMenu()
     {
         GameManager.Instance.gameLayerStatus = GAMESTATUS.INIT;
@@ -148,13 +157,16 @@ public class RoadManager : MonoBehaviour
         cam360.GetComponent<CameraFollow360>();
         //scoreManager.GetComponent<SumScoreExample>();
         
-        if (GameManager.Instance.isUsingVR)
+        if(GameManager.Instance != null)
         {
-            VRCamera.SetActive(true);
-            NormalCamera.SetActive(false);
+            if (GameManager.Instance.isUsingVR)
+            {
+                VRCamera.SetActive(true);
+                NormalCamera.SetActive(false);
+            }
         }
 
-        if (enableIntro && !GameManager.Instance.isUsingVR)
+        if (enableIntro)
         {
             cam360.distance = -50;
             playerController.GetComponent<PlayerController>().enabled = false;
