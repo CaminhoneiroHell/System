@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
         dummyCamera.SetActive(false);
         vrAdiviseText.enabled = false;
-        GameManager.Instance.ChangeState(State.SelectTrackVR);
+        //GameManager.Instance.ChangeState(State.SelectTrackVR);
         yield return new WaitForSeconds(1f);
 
     }
@@ -74,21 +74,21 @@ public class UIManager : MonoBehaviour
     //UI Logic by Input
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.Instance.currentState == State.MainScreen)
-            PlayGame();
+        //if (Input.GetKeyDown(KeyCode.Space) && GameManager.Instance.currentState == State.MainScreen)
+        //    PlayGame();
 
-        if (GameManager.Instance.gameLayerStatus == GAMESTATUS.PAUSED)
-        {
-            dummyCamera.SetActive(true);
-            PauseMenu(true);
-            //print("HERE updating, correct this");
-        }
-        else if(GameManager.Instance.gameLayerStatus == GAMESTATUS.RUNNING && dummyCamera)
-        {
-            //print("updating, correct this");
-            dummyCamera.SetActive(false);
-            PauseMenu(false);
-        }
+        //if (GameManager.Instance.gameLayerStatus == GAMESTATUS.PAUSED)
+        //{
+        //    dummyCamera.SetActive(true);
+        //    PauseMenu(true);
+        //    //print("HERE updating, correct this");
+        //}
+        //else if(GameManager.Instance.gameLayerStatus == GAMESTATUS.RUNNING && dummyCamera)
+        //{
+        //    //print("updating, correct this");
+        //    dummyCamera.SetActive(false);
+        //    PauseMenu(false);
+        //}
     }
 
     public void PlayGame()
@@ -106,30 +106,30 @@ public class UIManager : MonoBehaviour
     //UI Logic by UIButton toogling
     public void EnterVRGameplayMode()
     {
-        GameManager.Instance.ChangeState(State.SelectTrackVR);
+        //GameManager.Instance.ChangeState(State.SelectTrackVR);
     }
 
     public void EnterNormalGameplayMode()
     {
-        GameManager.Instance.ChangeState(State.SelectTrack);
+        //GameManager.Instance.ChangeState(State.SelectTrack);
     }
 
 
     //Stage select on Normal Cam UI
     public void FarmRoad()
     {
-        GameManager.Instance.ChangeState(State.MooMooFarm_race);
+        //GameManager.Instance.ChangeState(State.MooMooFarm_race);
     }
 
     public void UnderwaterRoad()
     {
         //if is unlocked
-        GameManager.Instance.ChangeState(State.Underwater_race);
+        //GameManager.Instance.ChangeState(State.Underwater_race);
     }
 
     public void RainbowRoad()
     {
         //if is unlocked
-        GameManager.Instance.ChangeState(State.RainbowRoad_race);
+        //GameManager.Instance.ChangeState(State.RainbowRoad_race);
     }
 }

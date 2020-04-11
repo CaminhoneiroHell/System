@@ -148,7 +148,7 @@ public class RayCaster : MonoBehaviour
     IEnumerator LoadFarm()
     {
         yield return new WaitForSeconds(2.5f);
-        GameManager.Instance.ChangeState(State.MooMooFarm_race);
+        //GameManager.Instance.ChangeState(State.MooMooFarm_race);
     }
 
 

@@ -10,7 +10,7 @@ public enum GAMESTATUS
     PAUSED
 }
 
-public class GameManager : Singleton<GameManager> {
+public class FSMClient : Singleton<FSMClient> {
 
     //public GAMESTATUS gmStats;
     //private SecretConsole secretConsole;

@@ -9,7 +9,7 @@ public class SelectTrackVRState : MonoBehaviour, IFSMState
     {
         EventManager.StartVR();
         SceneManager.LoadScene("VRTrackSelectScreen");
-        GameManager.Instance.isUsingVR = true;
+        //GameManager.Instance.isUsingVR = true;
         //yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
     }

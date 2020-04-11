@@ -72,7 +72,7 @@ public class RoadManager : MonoBehaviour
     {
         try
         {
-            GameManager.Instance.gameLayerStatus = GAMESTATUS.RUNNING;
+            //GameManager.Instance.gameLayerStatus = GAMESTATUS.RUNNING;
         }
         catch (Exception e)
         {
@@ -82,7 +82,7 @@ public class RoadManager : MonoBehaviour
 
     void UpdateGameStatusToRunningForDisanablePauseMenu()
     {
-        GameManager.Instance.gameLayerStatus = GAMESTATUS.INIT;
+        //GameManager.Instance.gameLayerStatus = GAMESTATUS.INIT;
     }
 
     void CalculateRank()
@@ -127,10 +127,10 @@ public class RoadManager : MonoBehaviour
 
     void SelectScene()
     {
-        if (GameManager.Instance.isUsingVR)
-            GameManager.Instance.ChangeState(State.SelectTrackVR);
-        else
-            GameManager.Instance.ChangeState(State.SelectTrack);
+        //if (GameManager.Instance.isUsingVR)
+        //    GameManager.Instance.ChangeState(State.SelectTrackVR);
+        //else
+        //    GameManager.Instance.ChangeState(State.SelectTrack);
     }
 
     bool toogleClock = false;
@@ -157,14 +157,14 @@ public class RoadManager : MonoBehaviour
         cam360.GetComponent<CameraFollow360>();
         //scoreManager.GetComponent<SumScoreExample>();
         
-        if(GameManager.Instance != null)
-        {
-            if (GameManager.Instance.isUsingVR)
-            {
-                VRCamera.SetActive(true);
-                NormalCamera.SetActive(false);
-            }
-        }
+        //if(GameManager.Instance != null)
+        //{
+        //    if (GameManager.Instance.isUsingVR)
+        //    {
+        //        VRCamera.SetActive(true);
+        //        NormalCamera.SetActive(false);
+        //    }
+        //}
 
         if (enableIntro)
         {
