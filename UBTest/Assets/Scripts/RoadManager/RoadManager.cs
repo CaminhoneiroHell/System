@@ -76,7 +76,7 @@ public class RoadManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            print("error");
+            Debug.LogWarning("GameManager is not instantiated");
         }
     }
 
