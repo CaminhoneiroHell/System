@@ -5,21 +5,14 @@ using UnityEngine.SceneManagement;
 using Patterns.Creational.Singleton;
 using System.Linq;
 
-public enum GameState
-{
-    INIT,
-    RUNNING,
-    PAUSED
-}
+//public enum GameState
+//{
+//    INIT,
+//    RUNNING,
+//    PAUSED
+//}
 
-public enum SceneState
-{
-    FarmRoad,
-    OceanRoad,
-    RainbowRoad
-}
-
-public class LevelManager : Singleton<LevelManager>
+public class LevelManager //: Singleton<LevelManager>
 {
     //What lvl the game currently is
     //load and unload current game lvls
@@ -29,12 +22,21 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] int m_lvl;
     [SerializeField] int m_currentLvl;
     List<AsyncOperation> asyncLevelList;
+    //Singleton
+    public static LevelManager _instance;
 
-    public static bool isGamePaused => Mathf.Abs(Time.deltaTime) < float.Epsilon;
-    private void Start()
+    private LevelManager()
     {
-        DontDestroyOnLoad(gameObject);
         asyncLevelList = new List<AsyncOperation>();
+
+        if (_instance != null)
+        {
+            Debug.LogError("[Singleton] Trying to instantitate a second instance of a singleton class." + "Instance name: " + _instance);
+        }
+        else
+        {
+            _instance = this;
+        }
     }
 
     void OnLoadOperationComplete(AsyncOperation ao)
@@ -85,4 +87,7 @@ public class LevelManager : Singleton<LevelManager>
             UnloadLevel(m_lvl);
         }
     }
+
+
+    public static bool isGamePaused => Mathf.Abs(Time.deltaTime) < float.Epsilon;
 }
