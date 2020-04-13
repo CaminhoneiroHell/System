@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using System.Collections;
 
-public class InitState : MonoBehaviour, IFSMState
+public class InitState : MonoBehaviour, IFSMState 
 {
 
     public IEnumerator Enter()
     {
         //Splash Screen
         yield return new WaitForSeconds(1f);
+        //FSMClient.Instance.ChangeState(State.MainScreen);
         //GameManager.Instance.ChangeState(State.MainScreen);
     }
 

@@ -1,7 +1,4 @@
-﻿/* Interface para os estados que são gerenciados pelo FSM.cs
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public interface IFSMState {

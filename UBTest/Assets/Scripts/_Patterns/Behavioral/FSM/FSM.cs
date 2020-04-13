@@ -1,8 +1,6 @@
-﻿/* Classe que controla uma maquina de estados
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FSM : MonoBehaviour {
 
@@ -10,16 +8,13 @@ public class FSM : MonoBehaviour {
 
 	public IEnumerator ChangeState(IFSMState newState){
         StopAllCoroutines();
-		//Verifica se o estado atual nao é nulo
 		if(currentState != null){
-			//Se nao for, damos um exit
 			yield return StartCoroutine(currentState.Exit());
 		}
 		currentState = newState;
 		StartCoroutine(currentState.Enter());
 	}
 
-	//Metodo para inicializar o FSM, semelhante a um constructor
 	public void Initialize(IFSMState state){
 		StartCoroutine(ChangeState(state));
 	}
@@ -28,10 +23,15 @@ public class FSM : MonoBehaviour {
 		return currentState;
 	}
 
-	//Atualiza o estado Update dos estados
 	private void Update(){
 		if(currentState != null){
 			currentState.FSMUpdate();
 		}
 	}
+
+	private void DestroyStateOnChange(Object curState)
+	{
+		Destroy(curState);
+	}
+
 }

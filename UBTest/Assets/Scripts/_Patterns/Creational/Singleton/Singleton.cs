@@ -23,7 +23,7 @@ namespace Patterns.Creational.Singleton
             if (instance != null)
             {
                 Debug.LogError("[Singleton] Trying to instantitate a second instance of a singleton class." + "Instance name: " + instance);
-                //Destroy(this);
+                Destroy(this.gameObject);
             }
             else
             {

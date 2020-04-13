@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class EventManager : MonoBehaviour
 {
-    public delegate void StartGameDelegate();
-    public static StartGameDelegate onStartGame;
+    //public delegate void StartGameDelegate();
+    //public static StartGameDelegate onStartGame;
+
+    public static Action onStartGame;
 
     public delegate void StartVRDelegate();
     public static StartVRDelegate onStartVR;

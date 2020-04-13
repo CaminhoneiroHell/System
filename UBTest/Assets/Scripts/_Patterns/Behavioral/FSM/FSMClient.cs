@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Patterns.Creational.Singleton;
+using Zenject;
 
 public enum GAMESTATUS
 {
@@ -15,45 +17,48 @@ public class FSMClient : Singleton<FSMClient> {
     //public GAMESTATUS gmStats;
     //private SecretConsole secretConsole;
 
+
     //States
-    private InitState initState;
-    private MainScreenState mainScreenState;
-    private MenuState menuState;
-    private VRMenuState vrMenuState;
-    private SelectTrackState selectTrackState;
-    private SelectTrackVRState selectTrackVRState;
-    private MooMooFarmRaceState mooMooFarmState;
-    private UnderwaterRaceState underWaterState;
-    private RainbowRoadRaceState rainbowRoadState;
-    private StatsState statsState;
-    private CreditsState creditsState;
+    InitState initState;
+    MainScreenState mainScreenState;
+    MenuState menuState;
+    VRMenuState vrMenuState;
+    SelectTrackState selectTrackState;
+    SelectTrackVRState selectTrackVRState;
+    MooMooFarmRaceState mooMooFarmState;
+    UnderwaterRaceState underWaterState;
+    RainbowRoadRaceState rainbowRoadState;
+    StatsState statsState;
+    CreditsState creditsState;
+
 
     //Strategy
     private FSM fsm;
-    public State currentState { get; private set; } //Stores actual state
 
-    public GAMESTATUS gameLayerStatus { get; set ; } // Terrible I know 
+
+    public State currentState { get; private set; }
+    public GAMESTATUS gameLayerStatus { get; set; }
     public bool isUsingVR { get; set; }
+
 
     private void Start()
     {
-        isUsingVR = false;
-        //Dont let this object be destroyed
         DontDestroyOnLoad(gameObject);
-        //Create machine state
+
         fsm = gameObject.AddComponent<FSM>();
-        //Define states
+
+        //Define state
         initState = gameObject.AddComponent<InitState>();
-        mainScreenState = gameObject.AddComponent<MainScreenState>();
-        menuState = gameObject.AddComponent<MenuState>();
-        vrMenuState = gameObject.AddComponent<VRMenuState>();
-        selectTrackState = gameObject.AddComponent<SelectTrackState>();
-        selectTrackVRState = gameObject.AddComponent<SelectTrackVRState>();
-        mooMooFarmState = gameObject.AddComponent<MooMooFarmRaceState>();
-        underWaterState = gameObject.AddComponent<UnderwaterRaceState>();
-        rainbowRoadState = gameObject.AddComponent<RainbowRoadRaceState>();
-        statsState = gameObject.AddComponent<StatsState>();
-        creditsState = gameObject.AddComponent<CreditsState>();
+        //mainScreenState = gameObject.AddComponent<MainScreenState>();
+        //menuState = gameObject.AddComponent<MenuState>();
+        //vrMenuState = gameObject.AddComponent<VRMenuState>();
+        //selectTrackState = gameObject.AddComponent<SelectTrackState>();
+        //selectTrackVRState = gameObject.AddComponent<SelectTrackVRState>();
+        //mooMooFarmState = gameObject.AddComponent<MooMooFarmRaceState>();
+        //underWaterState = gameObject.AddComponent<UnderwaterRaceState>();
+        //rainbowRoadState = gameObject.AddComponent<RainbowRoadRaceState>();
+        //statsState = gameObject.AddComponent<StatsState>();
+        //creditsState = gameObject.AddComponent<CreditsState>();
 
         //Initialize fsm putting in the first state
         fsm.Initialize(initState);
@@ -72,6 +77,7 @@ public class FSMClient : Singleton<FSMClient> {
                 StartCoroutine(fsm.ChangeState(initState));
                 break;
             case State.MainScreen:
+                mainScreenState = gameObject.AddComponent<MainScreenState>();       
                 StartCoroutine(fsm.ChangeState(mainScreenState));
                 break;
             case State.Menu:

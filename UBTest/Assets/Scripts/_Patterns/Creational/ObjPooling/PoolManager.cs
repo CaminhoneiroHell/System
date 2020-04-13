@@ -5,9 +5,9 @@ using Patterns.Creational.Singleton;
 
 public class PoolManager : Singleton<PoolManager>
 {
-    private GameObject poolObjContainer;
-    [SerializeField] GameObject poolObj;
-    private List<GameObject> pooledGmObjList = new List<GameObject>();
+    private GameObject p_ObjContainer;
+    [SerializeField] GameObject p_Obj;
+    private List<GameObject> p_GmObjList = new List<GameObject>();
 
     private void Start()
     {
@@ -16,19 +16,19 @@ public class PoolManager : Singleton<PoolManager>
 
     public List<GameObject> GeneratePooledObj(int size)
     {
-        if(poolObjContainer == null)
+        if(p_ObjContainer == null)
         {
-            poolObjContainer = new GameObject();
-            poolObjContainer.gameObject.name = "PooledObjectsContainer";
+            p_ObjContainer = new GameObject();
+            p_ObjContainer.gameObject.name = "PooledObjectsContainer";
         }
 
         for (int i = 0; i < size; i++){
-            GameObject GO = Instantiate(poolObj);
-            pooledGmObjList.Add(GO);
-            GO.transform.SetParent(poolObjContainer.transform);
+            GameObject GO = Instantiate(p_Obj);
+            p_GmObjList.Add(GO);
+            GO.transform.SetParent(p_ObjContainer.transform);
             GO.SetActive(false);
         }
-        return pooledGmObjList;
+        return p_GmObjList;
     }
 
     public GameObject RequestPooledObj()
@@ -36,7 +36,7 @@ public class PoolManager : Singleton<PoolManager>
         print("Request obj");
         //bool requestReceived = false;
         //loop through the obj list
-        foreach(GameObject gPool in pooledGmObjList)
+        foreach(GameObject gPool in p_GmObjList)
         {
             //checking for non-active obj
             if (!gPool.activeSelf){
@@ -49,7 +49,7 @@ public class PoolManager : Singleton<PoolManager>
         print("no obj is available, generating 3 amount of obj");
         //generate x amount of obj and run the request obj method
         GeneratePooledObj(3);
-        foreach (GameObject gPool in pooledGmObjList){
+        foreach (GameObject gPool in p_GmObjList){
             if (!gPool.activeSelf){
                 gPool.SetActive(true);
                 return gPool;
