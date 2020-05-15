@@ -4,73 +4,55 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: AnimatedFire-ShaderFunction
   m_Shader: {fileID: 4800000, guid: ae91eafd3b64fe54692478d9493d4c44, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 5
+  m_LightmapFlags: 1
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TexEnvs:
-    - first:
-        name: _Albedo
-      second:
+    - _Albedo:
         m_Texture: {fileID: 2800000, guid: 7130c16fd8005b546b111d341310a9a4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _BurnMask
-      second:
+    - _BurnMask:
         m_Texture: {fileID: 2800000, guid: 36be8d528a4fa024faa4680d7658642c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _FireTexture
-      second:
+    - _FireTexture:
         m_Texture: {fileID: 2800000, guid: f7e96904e8667e1439548f0f86389447, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 3.43, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _Mask
-      second:
+    - _Mask:
         m_Texture: {fileID: 2800000, guid: 36be8d528a4fa024faa4680d7658642c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _Normals
-      second:
+    - _Normals:
         m_Texture: {fileID: 2800000, guid: 11f03d9db1a617e40b7ece71f0a84f6f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _Specular
-      second:
+    - _Specular:
         m_Texture: {fileID: 2800000, guid: 6618005f6bafebf40b3d09f498401fba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _TileableFire
-      second:
+    - _TileableFire:
         m_Texture: {fileID: 2800000, guid: f7e96904e8667e1439548f0f86389447, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _texcoord
-      second:
+    - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - first:
-        name: _FireIntensity
-      second: 1
-    - first:
-        name: _Smoothness
-      second: 1
-    - first:
-        name: __dirty
-      second: 0
+    - _FireIntensity: 1
+    - _Smoothness: 6.25
+    - __dirty: 0
     m_Colors: []

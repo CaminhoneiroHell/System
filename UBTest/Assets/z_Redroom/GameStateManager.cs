@@ -68,7 +68,6 @@ namespace CaminhoneiroHell.RedRoom.Strategy
     public interface IGameStatemanager
     {
         void ChangeState(State newState);
-
     }
 
     public class GameStateManager : Singleton<GameStateManager>, IGameStatemanager
