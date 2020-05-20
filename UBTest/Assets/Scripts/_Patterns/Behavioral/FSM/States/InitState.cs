@@ -8,7 +8,6 @@ public class InitState : MonoBehaviour, IFSMState
         //Splash Screen
         yield return new WaitForSeconds(1f);
         //FSMClient.Instance.ChangeState(State.MainScreen);
-        //GameManager.Instance.ChangeState(State.MainScreen);
     }
 
     public IEnumerator Exit()
