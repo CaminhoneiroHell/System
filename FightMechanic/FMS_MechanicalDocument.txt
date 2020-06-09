@@ -1,0 +1,50 @@
+Fighting Mechanic System
+
+ > Trigger Animations
+ > STATES
+    > OnGuard
+     > Walk (left, right, foward, back) > 2 feets
+     > Focus enemy
+        * Enable Cross UI
+        > Attacks:
+            //Must have
+            Talho
+            Fendente
+            Corte perna
+            Reverso perna
+            Flanco
+            Reverso Flanco
+            Ataque em chefe
+            //Extra
+            Reverso chefe
+            Estoque
+        
+        > Defesa:
+            //Must have
+            Def Talho
+            Def Fendente
+            Def Corte perna
+            Def Reverso perna
+            Def Flanco
+            Def Reverso Flanco
+            Def Ataque em chefe
+            //Extra
+            Def Reverso chefe
+            Def Estoque
+
+        > Passages
+            Trava reverso corte perna, imobiliza inimigo, chuta o peito empurrando para trás 
+            Passagem
+            Crucifixo
+            Finaliza
+
+
+     > Dodge:
+
+
+
+
+    > OffGuard
+     > Walk (left, right, foward, back)
+
+ 

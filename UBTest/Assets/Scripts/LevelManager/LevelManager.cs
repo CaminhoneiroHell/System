@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Patterns.Creational.Singleton;
 using System.Linq;
+using System;
 
 //public enum GameState
 //{
@@ -12,7 +13,7 @@ using System.Linq;
 //    PAUSED
 //}
 
-public class LevelManager //: Singleton<LevelManager>
+public class LevelManager : Singleton<LevelManager>
 {
     //What lvl the game currently is
     //load and unload current game lvls
@@ -22,22 +23,23 @@ public class LevelManager //: Singleton<LevelManager>
     [SerializeField] int m_lvl;
     [SerializeField] int m_currentLvl;
     List<AsyncOperation> asyncLevelList;
+
     //Singleton
-    public static LevelManager _instance;
+    //public static LevelManager _instance;
 
-    private LevelManager()
-    {
-        asyncLevelList = new List<AsyncOperation>();
+    //private LevelManager()
+    //{
+    //    asyncLevelList = new List<AsyncOperation>();
 
-        if (_instance != null)
-        {
-            Debug.LogError("[Singleton] Trying to instantitate a second instance of a singleton class." + "Instance name: " + _instance);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
+    //    if (_instance != null)
+    //    {
+    //        Debug.LogError("[Singleton] Trying to instantitate a second instance of a singleton class." + "Instance name: " + _instance);
+    //    }
+    //    else
+    //    {
+    //        _instance = this;
+    //    }
+    //}
 
     void OnLoadOperationComplete(AsyncOperation ao)
     {
