@@ -4,13 +4,8 @@ using System.Collections;
 
 public class EventManager : MonoBehaviour
 {
-    //public delegate void StartGameDelegate();
-    //public static StartGameDelegate onStartGame;
-
     public static Action onStartGame;
-
-    public delegate void StartVRDelegate();
-    public static StartVRDelegate onStartVR;
+    public static Action onStartVR;
 
     public delegate void StartNormalCamDelegate();
     public static StartNormalCamDelegate onStartNormalCam;
@@ -18,8 +13,8 @@ public class EventManager : MonoBehaviour
     public delegate void StartRaceDelegate();
     public static StartRaceDelegate onStartRace;
 
-    //public delegate void PauseDelegate();
-    //public static PauseDelegate onPause;
+    public delegate void PauseDelegate();
+    public static PauseDelegate onPause;
 
     public delegate void TakeDamageDelegate(float amt);
     public static TakeDamageDelegate onTakeDamage;
@@ -30,12 +25,12 @@ public class EventManager : MonoBehaviour
     public delegate void RaceFinisherDelegate();
     public static RaceFinisherDelegate onRaceFinished;
 
-    //public static void PauseGame()
-    //{
-    //    Debug.Log("Pause event called");
-    //    if (onPause != null)
-    //        onPause();
-    //}
+    public static void PauseGame()
+    {
+        Debug.Log("Pause event called");
+        if (onPause != null)
+            onPause();
+    }
 
     public static void RaceFinished()
     {

@@ -28,6 +28,7 @@ namespace Patterns.Creational.Singleton
             else
             {
                 instance = (T)this;
+                DontDestroyOnLoad(instance);
             }
         }
 

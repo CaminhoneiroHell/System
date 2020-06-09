@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Patterns.Creational.Singleton;
+<<<<<<< HEAD
 using System.Linq;
 using System;
 
@@ -13,6 +14,9 @@ using System;
 //    PAUSED
 //}
 
+=======
+
+>>>>>>> 9c1f89c728882f12d78308d1661c572e8e112e51
 public class LevelManager : Singleton<LevelManager>
 {
     //What lvl the game currently is
@@ -20,7 +24,9 @@ public class LevelManager : Singleton<LevelManager>
     //keep track of game state
     //Generate other persistent systems
 
+    private List<AsyncOperation> asyncLevelList;
     [SerializeField] int m_lvl;
+<<<<<<< HEAD
     [SerializeField] int m_currentLvl;
     List<AsyncOperation> asyncLevelList;
 
@@ -40,6 +46,55 @@ public class LevelManager : Singleton<LevelManager>
     //        _instance = this;
     //    }
     //}
+=======
+    [SerializeField][Header("Don't touch, dont work")] private int m_currentLvl;
+
+    private void Start()
+    {
+        m_currentLvl = 0;
+        asyncLevelList = new List<AsyncOperation>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadLevel(m_lvl);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            UnloadCurrentLevel();
+        }
+    }
+>>>>>>> 9c1f89c728882f12d78308d1661c572e8e112e51
+
+    void LoadLevel(int level)
+    {
+        AsyncOperation ao = SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
+        if (ao == null)
+        {
+            Debug.LogWarning("[LM] was unable to load the lvl: " + level);
+            return;
+        }
+
+        //ao.completed += (ao) => { asyncLevelList.Add(ao); };
+        ao.completed += OnLoadOperationComplete;
+        m_currentLvl = level;
+    }
+
+    void UnloadCurrentLevel()
+    {
+        AsyncOperation ao = SceneManager.UnloadSceneAsync(m_currentLvl, UnloadSceneOptions.None);
+        if (ao == null)
+        {
+            Debug.LogWarning("[LM] was unable to unload the lvl: " + m_currentLvl);
+            return;
+        }
+
+        ao.completed += OnUnloadOperationIsComplete;
+    }
+
+
 
     void OnLoadOperationComplete(AsyncOperation ao)
     {
@@ -52,42 +107,6 @@ public class LevelManager : Singleton<LevelManager>
         Debug.Log("Level Unloaded");
         if (asyncLevelList.Contains(ao))
             asyncLevelList.Remove(ao);
-    }
-
-    void LoadLevel(int level)
-    {
-        AsyncOperation ao = SceneManager.LoadSceneAsync(level, LoadSceneMode.Additive);
-        if(ao == null)
-        {
-            Debug.LogWarning("[LM] was unable to load the lvl: " + level);
-            return;
-        }
-
-        //ao.completed += (ao) => { asyncLevelList.Add(ao); };
-        ao.completed += OnLoadOperationComplete;
-    }
-
-    void UnloadLevel(int level)
-    {
-        AsyncOperation ao = SceneManager.UnloadSceneAsync(level, UnloadSceneOptions.None);
-        if (ao == null)
-        {
-            Debug.LogWarning("[LM] was unable to unload the lvl: " + level);
-            return;
-        }
-
-        ao.completed += OnUnloadOperationIsComplete;
-    }
-
-    private void Update(){
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LoadLevel(m_lvl);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UnloadLevel(m_lvl);
-        }
     }
 
 

@@ -7,6 +7,6 @@ public class GameInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<IFSMState>().To<MainScreenState>().AsSingle();
+        //Container.Bind<IFSMState>().To<MainScreenState>().AsSingle();
     }
 }
